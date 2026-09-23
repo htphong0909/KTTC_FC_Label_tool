@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KTTC_FC - Sổ Tay Gán Nhãn Nhanh 300 Video Thi Công</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
+    .badge-start { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .badge-key { background-color: #fefce8; color: #b45309; border: 1px solid #fde047; }
+    .badge-end { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
+
+  <!-- TOP STICKY HEADER -->
+  <header class="sticky top-0 z-50 glass border-b border-slate-200/80 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-blue-500/20">
+            FC
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="font-extrabold text-slate-900 text-lg leading-tight">KTTC_FC • Sổ Tay Gán Nhãn Chuẩn</h1>
+              <span class="px-2 py-0.5 text-xs font-semibold bg-blue-100 text-blue-700 rounded-full">v2.0 Visual</span>
+            </div>
+            <p class="text-xs text-slate-500 hidden sm:block">Quy chuẩn 3 Mốc (Start - Key - End) cho 300 video thi công Fast Connector</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a href="#quick-rule" class="px-3 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
+            <span>⚡</span> <span class="hidden sm:inline">Quy tắc vàng</span> 3 Mốc
+          </a>
+          <a href="#json-schema" class="px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
+            <span>📋</span> Copy JSON
+          </a>
+        </div>
+      </div>
+
+        <!-- QUICK NAVIGATION BAR (STEP PILLS) -->
+      <div class="flex items-center gap-1.5 overflow-x-auto py-2.5 mt-1 no-scrollbar border-t border-slate-100 text-xs font-medium">
+        <span class="text-slate-400 text-[11px] font-semibold uppercase tracking-wider pr-1">Bước:</span>
+        <a href="#step-b1" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 shadow-2xs whitespace-nowrap transition-all font-semibold">B1: Tháo FC</a>
+        <a href="#step-b2" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 shadow-2xs whitespace-nowrap transition-all font-semibold">B2: Cắt dây treo</a>
+        <a href="#step-b3" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 shadow-2xs whitespace-nowrap transition-all font-semibold">B3: Luồn ốc</a>
+        <a href="#step-b4" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 shadow-2xs whitespace-nowrap transition-all font-semibold">B4: Tuốt vỏ ngoài</a>
+        <a href="#step-b5" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 shadow-2xs whitespace-nowrap transition-all font-semibold">B5: Tuốt vỏ màu</a>
+        <a href="#step-b6a" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 shadow-2xs whitespace-nowrap transition-all font-semibold">B6a: Lau cồn</a>
+        <a href="#step-b6b" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 shadow-2xs whitespace-nowrap transition-all font-semibold">B6b: Bấm dao cắt</a>
+        <a href="#step-b7" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 shadow-2xs whitespace-nowrap transition-all font-semibold">B7: Luồn sợi FC</a>
+        <a href="#step-b8" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 shadow-2xs whitespace-nowrap transition-all font-semibold">B8: Siết chuôi ốc</a>
+        <a href="#step-b9" class="px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-blue-500 hover:text-blue-600 shadow-2xs whitespace-nowrap transition-all font-semibold">B9: Khóa vỏ xanh</a>
+        <a href="#step-b0" class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap transition-all font-semibold">B0: Nghỉ</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12">
+
+    <!-- HERO-GRADE QUICK RULE SECTION (QUY TẮC VÀNG 3 MỐC - NỀN TẢNG XUYÊN SUỐT) -->
+    <section id="quick-rule" class="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 rounded-3xl p-6 sm:p-10 lg:p-12 text-white shadow-2xl relative overflow-hidden border border-indigo-500/30">
+      <!-- Ambient Glows -->
+      <div class="absolute -right-16 -bottom-16 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-16 -top-16 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10">
+        <!-- Top Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-500/20 border border-blue-400/40 text-blue-300 rounded-full text-xs font-extrabold uppercase tracking-wider mb-4 shadow-sm">
+          <span>⚡</span> NGUYÊN TẮC CỐT LÕI • ÁP DỤNG ĐỒNG BỘ CHO MỌI BƯỚC TỪ B1 ➔ B9
+        </div>
+
+        <!-- Headline -->
+        <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
+          Quy Tắc Vàng 3 Mốc Thời Gian: <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-amber-300 to-rose-400">Start ➔ Key_Time ➔ End</span>
+        </h2>
+        <p class="text-slate-300 text-base sm:text-lg mt-3 max-w-4xl leading-relaxed">
+          Đây là quy chuẩn xác định cách gán nhãn xuyên suốt 300 video. Bất kể bước nào, người gán nhãn chỉ cần xác định chính xác <b class="text-white font-bold">đoạn tác động cơ học (Start ➔ End)</b> và <b class="text-amber-300 font-bold">đúng 1 frame then chốt (Key_Time)</b>.
+        </p>
+
+        <!-- VISUAL TIMELINE ANATOMY STRIP -->
+        <div class="mt-8 mb-8 p-4 sm:p-5 bg-slate-900/90 border border-slate-800 rounded-2xl backdrop-blur">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+            <span>📊</span> Trực quan hóa dòng thời gian (Timeline Anatomy) của một bước thao tác
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-2 items-center text-center text-xs font-bold select-none">
+            <div class="sm:col-span-3 py-3 px-2 rounded-xl bg-slate-800 text-slate-400 border border-slate-700/70 flex flex-col items-center justify-center">
+              <span class="font-bold">B0 (Nghỉ / Chuyển tiếp)</span>
+              <span class="text-[10px] text-slate-500 font-normal">Tay chưa chạm cáp / đang tìm kềm</span>
+            </div>
+            <div class="hidden sm:flex sm:col-span-1 text-emerald-400 font-extrabold text-base justify-center">➔</div>
+            <div class="sm:col-span-2 py-3 px-2 rounded-xl bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 shadow-sm flex flex-col items-center justify-center">
+              <span class="flex items-center gap-1 font-bold">🟢 START</span>
+              <span class="text-[10px] text-emerald-400 font-normal">Chạm cáp + bắt đầu tác lực</span>
+            </div>
+            <div class="sm:col-span-2 py-3 px-2 rounded-xl bg-amber-950/90 text-amber-200 border-2 border-amber-400 shadow-md ring-2 ring-amber-500/20 flex flex-col items-center justify-center">
+              <span class="flex items-center gap-1 font-bold">⭐ KEY_TIME</span>
+              <span class="text-[10px] text-amber-300 font-normal">Đúng 1 frame xong kết quả</span>
+            </div>
+            <div class="sm:col-span-2 py-3 px-2 rounded-xl bg-rose-950/80 text-rose-300 border border-rose-500/50 shadow-sm flex flex-col items-center justify-center">
+              <span class="flex items-center gap-1 font-bold">🔴 END</span>
+              <span class="text-[10px] text-rose-400 font-normal">Nhả ra khỏi sợi cáp</span>
+            </div>
+            <div class="hidden sm:flex sm:col-span-1 text-slate-500 font-extrabold text-base justify-center">➔</div>
+            <div class="sm:col-span-1 py-3 px-2 rounded-xl bg-slate-800 text-slate-400 border border-slate-700/70 flex flex-col items-center justify-center">
+              <span class="font-bold">B0</span>
+              <span class="text-[10px] text-slate-500 font-normal">Đổi đồ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 LARGE PROMINENT CARDS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <!-- START CARD -->
+          <div class="bg-slate-900/90 border-2 border-emerald-500/40 hover:border-emerald-400 rounded-2xl p-6 transition-all duration-300 shadow-lg">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-3 py-1 bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 font-extrabold text-xs rounded-lg uppercase tracking-wider">
+                Mốc 1: Bắt đầu
+              </span>
+              <span class="text-2xl">🟢</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-white mb-2">Mốc START</h3>
+            <div class="text-slate-200 text-sm leading-relaxed space-y-2.5">
+              <p>
+                Khoảnh khắc tay hoặc công cụ <span class="text-emerald-300 font-bold underline decoration-emerald-400">chạm trực tiếp vào cáp/linh kiện</span> và bắt đầu tác động lực cơ học.
+              </p>
+            </div>
+          </div>
+
+          <!-- KEY_TIME CARD (SUPER HIGHLIGHTED) -->
+          <div class="bg-gradient-to-b from-slate-900 to-amber-950/40 border-2 border-amber-400 hover:border-amber-300 rounded-2xl p-6 transition-all duration-300 shadow-2xl ring-4 ring-amber-500/20 relative">
+            <div class="absolute -top-3.5 right-6 px-3 py-0.5 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[11px] rounded-full uppercase tracking-wider shadow-md">
+              ⭐ TRỌNG TÂM CỦA MỌI BƯỚC
+            </div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-3 py-1 bg-amber-500/20 border border-amber-400/60 text-amber-300 font-extrabold text-xs rounded-lg uppercase tracking-wider">
+                Mốc 2: Cột mốc then chốt
+              </span>
+              <span class="text-2xl">⭐</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-amber-300 mb-2">Mốc KEY_TIME (1 Frame)</h3>
+            <div class="text-slate-200 text-sm leading-relaxed space-y-2.5">
+              <p>
+                Đúng <span class="text-amber-300 font-bold underline decoration-amber-400">1 frame duy nhất</span> ghi nhận sự kiện vật lý chốt hạ đã hoàn tất:
+              </p>
+              <div class="p-3 bg-amber-950/60 border border-amber-700/50 rounded-xl text-xs text-amber-100 font-medium">
+                🎯 <b>Dấu hiệu nhận biết từng bước:</b>
+                <ul class="list-disc pl-4 mt-1.5 space-y-0.5 text-slate-300">
+                  <li><b>B1:</b> KTV đang vặn FC</li>
+                  <li><b>B2:</b> KTV đang kéo tách đôi lõi và dây treo</li>
+                  <li><b>B3:</b> Đuôi FC được luồng hoàn toàn vào dây</li>
+                  <li><b>B4:</b> KTV dùng sức bấm kiềm tách</li>
+                  <li><b>B5:</b> KTV đang dùng lực bấm kiềm tuốt tuốt lõi quang</li>
+                  <li><b>B6a:</b> Khăn giấy chạm vào sợi quang</li>
+                  <li><b>B6b:</b> Đóng nắp kéo cắt, cắt lõi quang</li>
+                  <li><b>B7:</b> Dây quang chạm vào đầu FC</li>
+                  <li><b>B8:</b> KTV vặn FC</li>
+                  <li><b>B9:</b> KTV dùng lực gỡ nắp FC</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- END CARD -->
+          <div class="bg-slate-900/90 border-2 border-rose-500/40 hover:border-rose-400 rounded-2xl p-6 transition-all duration-300 shadow-lg">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-3 py-1 bg-rose-500/20 border border-rose-400/50 text-rose-300 font-extrabold text-xs rounded-lg uppercase tracking-wider">
+                Mốc 3: Kết thúc
+              </span>
+              <span class="text-2xl">🔴</span>
+            </div>
+            <h3 class="text-xl font-extrabold text-white mb-2">Mốc END</h3>
+            <div class="text-slate-200 text-sm leading-relaxed space-y-2.5">
+              <p>
+                Khoảnh khắc công cụ hoặc ngón tay vừa <span class="text-rose-300 font-bold underline decoration-rose-400">nhả ra, rời hẳn khỏi sợi cáp/linh kiện</span>.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1 TO 9 STEP CARDS -->
+    <div class="space-y-8">
+
+      <!-- STEP B1 -->
+      <article id="step-b1" class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden scroll-mt-28">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-blue-600 text-white font-extrabold text-sm rounded-lg shadow-sm">B1</span>
+            <h3 class="text-lg font-bold text-slate-900">Tháo Đầu Fast Connector (FC)</h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-700 font-medium">⏱️ 3 – 6 giây</span>
+          </div>
+          <div class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-md">
+            Video thực tế: <span class="text-blue-600 font-bold">00:13.67 ➔ 00:15.98</span> (Key: 00:15.11)
+          </div>
+        </div>
+
+        <div class="p-6">
+          <!-- 3 IMAGES -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B1_1.jpg" alt="B1 Start (frame 410)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-start">
+                Start: 00:13.67 (KTV cầm FC chuẩn bị vặn)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-100 shadow-md">
+              <img src="img/B1_2.jpg" alt="B1 Key (frame 453)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-key shadow-sm">
+                ⭐ KEY: 00:15.11 (KTV đang vặn FC)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B1_3.jpg" alt="B1 End (frame 479)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-end">
+                End: 00:15.98 (2 phần của FC tách rời nhau ra)
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 MỐC THỜI GIAN CHUẨN (S - KEY - E) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[11px] shrink-0">Mốc S</span>
+              <span class="text-slate-700">KTV cầm FC chuẩn bị vặn</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[11px] shrink-0">Keyframe ⭐</span>
+              <span class="text-slate-800 font-bold">KTV đang vặn FC</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[11px] shrink-0">Mốc E</span>
+              <span class="text-slate-700">2 phần của FC tách rời nhau ra</span>
+            </div>
+          </div>
+
+          <!-- 3 BULLET POINTS -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3.5">
+              <div class="font-bold text-blue-900 mb-1 flex items-center gap-1.5">
+                <span>🔧</span> Dụng cụ nhận diện
+              </div>
+              <p class="text-slate-700">Tay không + <b>Đầu Fast Connector</b> (thân đen, vỏ bảo vệ xanh lá, chuôi ốc ren đen).</p>
+            </div>
+
+            <div class="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5">
+              <div class="font-bold text-emerald-900 mb-1 flex items-center gap-1.5">
+                <span>🎯</span> Dấu hiệu ĐẠT
+              </div>
+              <p class="text-slate-700">Đầu FC được tách thành 3 phần rõ ràng: <b>Vỏ xanh</b>, <b>Thân FC đen</b>, và <b>Chuôi ốc đen</b> để sẵn trên bàn.</p>
+            </div>
+
+            <div class="bg-amber-50/50 border border-amber-100 rounded-xl p-3.5">
+              <div class="font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+                <span>⚠️</span> Chú ý tránh nhầm
+              </div>
+              <p class="text-slate-700">Một số thợ làm B2 (cắt dây) trước B1. Vẫn gán đúng B1 lúc thợ tháo FC, không bị gò bó thứ tự.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP B2 -->
+      <article id="step-b2" class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden scroll-mt-28">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-red-600 text-white font-extrabold text-sm rounded-lg shadow-sm">B2</span>
+            <h3 class="text-lg font-bold text-slate-900">Tách & Cắt Bỏ Dây Treo Kim Loại</h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-700 font-medium">⏱️ 6 – 12 giây</span>
+          </div>
+          <div class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-md">
+            Video thực tế: <span class="text-blue-600 font-bold">00:03.40 ➔ 00:11.07</span> (Key: 00:08.70)
+          </div>
+        </div>
+
+        <div class="p-6">
+          <!-- 3 IMAGES -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B2_1.jpg" alt="B2 Start (frame 102)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-start">
+                Start: 00:03.40 (KTV dùng kiềm cắt cắt tách đôi đầu lõi và treo)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-100 shadow-md">
+              <img src="img/B2_2.jpg" alt="B2 Key (frame 261)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-key shadow-sm">
+                ⭐ KEY: 00:08.70 (KTV đang kéo tách đôi lõi và dây treo)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B2_3.jpg" alt="B2 End (frame 332)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-end">
+                End: 00:11.07 (KTV bấm cắt dây treo)
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 MỐC THỜI GIAN CHUẨN (S - KEY - E) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[11px] shrink-0">Mốc S</span>
+              <span class="text-slate-700">KTV dùng kiềm cắt cắt tách đôi đầu lõi và treo</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[11px] shrink-0">Keyframe ⭐</span>
+              <span class="text-slate-800 font-bold">KTV đang kéo tách đôi lõi và dây treo</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[11px] shrink-0">Mốc E</span>
+              <span class="text-slate-700">KTV bấm cắt dây treo</span>
+            </div>
+          </div>
+
+          <!-- 3 BULLET POINTS -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3.5">
+              <div class="font-bold text-blue-900 mb-1 flex items-center gap-1.5">
+                <span>🔧</span> Dụng cụ nhận diện
+              </div>
+              <p class="text-slate-700"><b>Kềm cắt cáp</b> cơ khí (cán bọc cao su đỏ-xanh hoặc vàng, 2 lưỡi vát sắc nhọn).</p>
+            </div>
+
+            <div class="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5">
+              <div class="font-bold text-emerald-900 mb-1 flex items-center gap-1.5">
+                <span>🎯</span> Dấu hiệu ĐẠT
+              </div>
+              <p class="text-slate-700">Dây thép gia cường bị <b>bấm đứt rời</b> khỏi thân cáp; đầu cáp chỉ còn phần dẹp chứa sợi quang.</p>
+            </div>
+
+            <div class="bg-amber-50/50 border border-amber-100 rounded-xl p-3.5">
+              <div class="font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+                <span>⚠️</span> Chú ý tránh nhầm
+              </div>
+              <p class="text-slate-700">Kềm cắt B2 khác hẳn kềm tuốt vỏ B4 (xanh lá) và kềm tuốt sợi B5 (xanh dương nhỏ).</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP B3 -->
+      <article id="step-b3" class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden scroll-mt-28">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-amber-600 text-white font-extrabold text-sm rounded-lg shadow-sm">B3</span>
+            <h3 class="text-lg font-bold text-slate-900">Luồn Cáp Vào Chuôi Ốc Chốt</h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-700 font-medium">⏱️ 3 – 6 giây</span>
+          </div>
+          <div class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-md">
+            Video thực tế: <span class="text-blue-600 font-bold">00:17.48 ➔ 00:18.98</span> (Key: 00:17.94)
+          </div>
+        </div>
+
+        <div class="p-6">
+          <!-- 3 IMAGES -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B3_1.jpg" alt="B3 Start (frame 524)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-start">
+                Start: 00:17.48 (Đuôi FC sắp chạm vào dây)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-100 shadow-md">
+              <img src="img/B3_2.jpg" alt="B3 Key (frame 538)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-key shadow-sm">
+                ⭐ KEY: 00:17.94 (Đuôi FC được luồng hoàn toàn vào dây)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B3_3.jpg" alt="B3 End (frame 569)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-end">
+                End: 00:18.98 (Đuôi FC được luồng xuống sâu, cách đầu dây khoảng dài)
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 MỐC THỜI GIAN CHUẨN (S - KEY - E) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[11px] shrink-0">Mốc S</span>
+              <span class="text-slate-700">Đuôi FC sắp chạm vào dây</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[11px] shrink-0">Keyframe ⭐</span>
+              <span class="text-slate-800 font-bold">Đuôi FC được luồng hoàn toàn vào dây</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[11px] shrink-0">Mốc E</span>
+              <span class="text-slate-700">Đuôi FC được luồng xuống sâu, cách đầu dây khoảng dài</span>
+            </div>
+          </div>
+
+          <!-- 3 BULLET POINTS -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3.5">
+              <div class="font-bold text-blue-900 mb-1 flex items-center gap-1.5">
+                <span>🔧</span> Dụng cụ nhận diện
+              </div>
+              <p class="text-slate-700">Tay cầm <b>chuôi ốc ren đen FC</b> và đầu cáp quang vừa cắt ở B2.</p>
+            </div>
+
+            <div class="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5">
+              <div class="font-bold text-emerald-900 mb-1 flex items-center gap-1.5">
+                <span>🎯</span> Dấu hiệu ĐẠT
+              </div>
+              <p class="text-slate-700">Đầu cáp <b>chui lọt hẳn qua ống chuôi ốc</b>; chuôi ốc trượt lùi về phía sau trên dây cáp.</p>
+            </div>
+
+            <div class="bg-amber-50/50 border border-amber-100 rounded-xl p-3.5">
+              <div class="font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+                <span>⚠️</span> Chú ý tránh nhầm
+              </div>
+              <p class="text-slate-700">Nếu thợ <b>quên không luồn ốc</b> trước khi tuốt vỏ B4/B5 thì <b>KHÔNG gán B3</b> (đánh dấu lỗi quy trình).</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP B4 -->
+      <article id="step-b4" class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden scroll-mt-28">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-emerald-600 text-white font-extrabold text-sm rounded-lg shadow-sm">B4</span>
+            <h3 class="text-lg font-bold text-slate-900">Tuốt Vỏ Ngoài Cáp Phẳng FTTH</h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-700 font-medium">⏱️ 10 – 20 giây</span>
+          </div>
+          <div class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-md">
+            Video thực tế: <span class="text-blue-600 font-bold">00:20.41 ➔ 00:24.58</span> (Key: 00:24.05)
+          </div>
+        </div>
+
+        <div class="p-6">
+          <!-- 3 IMAGES -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B4_1.jpg" alt="B4 Start (frame 612)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-start">
+                Start: 00:20.41 (Dây treo chạm kiềm tách)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-100 shadow-md">
+              <img src="img/B4_2.jpg" alt="B4 Key (frame 721)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-key shadow-sm">
+                ⭐ KEY: 00:24.05 (KTV dùng sức bấm kiềm tách)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B4_3.jpg" alt="B4 End (frame 737)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-end">
+                End: 00:24.58 (Lộ ra lõi dây quang)
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 MỐC THỜI GIAN CHUẨN (S - KEY - E) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[11px] shrink-0">Mốc S</span>
+              <span class="text-slate-700">Dây treo chạm kiềm tách</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[11px] shrink-0">Keyframe ⭐</span>
+              <span class="text-slate-800 font-bold">KTV dùng sức bấm kiềm tách</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[11px] shrink-0">Mốc E</span>
+              <span class="text-slate-700">Lộ ra lõi dây quang</span>
+            </div>
+          </div>
+
+          <!-- 3 BULLET POINTS -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3.5">
+              <div class="font-bold text-blue-900 mb-1 flex items-center gap-1.5">
+                <span>🔧</span> Dụng cụ nhận diện
+              </div>
+              <p class="text-slate-700"><b>Kềm tuốt vỏ cáp FTTH màu xanh lá cây</b> (kẹp ép phẳng) + <b>Thước cữ đo đen</b>.</p>
+            </div>
+
+            <div class="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5">
+              <div class="font-bold text-emerald-900 mb-1 flex items-center gap-1.5">
+                <span>🎯</span> Dấu hiệu ĐẠT
+              </div>
+              <p class="text-slate-700">Lớp vỏ nhựa đen ngoài cùng bị tuột ra, lộ đoạn sợi bọc màu dài khoảng 40–50mm được đo chuẩn cữ.</p>
+            </div>
+
+            <div class="bg-amber-50/50 border border-amber-100 rounded-xl p-3.5">
+              <div class="font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+                <span>⚠️</span> Chú ý tránh nhầm
+              </div>
+              <p class="text-slate-700">Kềm B4 có thân to màu xanh lá. Đừng nhầm với kềm tuốt sợi nhỏ cán xanh dương của B5.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP B5 -->
+      <article id="step-b5" class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden scroll-mt-28">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-cyan-600 text-white font-extrabold text-sm rounded-lg shadow-sm">B5</span>
+            <h3 class="text-lg font-bold text-slate-900">Tuốt Lớp Vỏ Màu Sợi Quang</h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-700 font-medium">⏱️ 5 – 10 giây</span>
+          </div>
+          <div class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-md">
+            Video thực tế: <span class="text-blue-600 font-bold">00:29.42 ➔ 00:34.65</span> (Key: 00:33.28)
+          </div>
+        </div>
+
+        <div class="p-6">
+          <!-- 3 IMAGES -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B5_1.jpg" alt="B5 Start (frame 882)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-start">
+                Start: 00:29.42 (Dây quang được đặt hoàn toàn vào thước đo)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-100 shadow-md">
+              <img src="img/B5_2.jpg" alt="B5 Key (frame 998)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-key shadow-sm">
+                ⭐ KEY: 00:33.28 (KTV đang dùng lực bấm kiềm tuốt tuốt lõi quang)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B5_3.jpg" alt="B5 End (frame 1039)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-end">
+                End: 00:34.65 (Kiềm tuốt rời khỏi dây quang)
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 MỐC THỜI GIAN CHUẨN (S - KEY - E) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[11px] shrink-0">Mốc S</span>
+              <span class="text-slate-700">Dây quang được đặt hoàn toàn vào thước đo</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[11px] shrink-0">Keyframe ⭐</span>
+              <span class="text-slate-800 font-bold">KTV đang dùng lực bấm kiềm tuốt tuốt lõi quang</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[11px] shrink-0">Mốc E</span>
+              <span class="text-slate-700">Kiềm tuốt rời khỏi dây quang</span>
+            </div>
+          </div>
+
+          <!-- 3 BULLET POINTS -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3.5">
+              <div class="font-bold text-blue-900 mb-1 flex items-center gap-1.5">
+                <span>🔧</span> Dụng cụ nhận diện
+              </div>
+              <p class="text-slate-700"><b>Kềm tuốt sợi 3 lỗ cán xanh dương</b> (mũi kềm có các lỗ tròn nhỏ chuyên tuốt sợi 250µm).</p>
+            </div>
+
+            <div class="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5">
+              <div class="font-bold text-emerald-900 mb-1 flex items-center gap-1.5">
+                <span>🎯</span> Dấu hiệu ĐẠT
+              </div>
+              <p class="text-slate-700">Lớp vỏ màu tuột ra, để lộ sợi thủy tinh <b>trong suốt mảnh như sợi tóc</b> ở đầu sợi cáp.</p>
+            </div>
+
+            <div class="bg-amber-50/50 border border-amber-100 rounded-xl p-3.5">
+              <div class="font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+                <span>⚠️</span> Chú ý tránh nhầm
+              </div>
+              <p class="text-slate-700">Động tác tuốt diễn ra rất dứt khoát trong 1-2 giây. Bắt đúng frame sợi vỏ màu bị kéo tuột ra.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP B6a & B6b (COMBO CARD) -->
+      <article id="step-b6" class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden scroll-mt-28">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-indigo-600 text-white font-extrabold text-sm rounded-lg shadow-sm">B6</span>
+            <div>
+              <h3 class="text-lg font-bold text-slate-900">Vệ Sinh (B6a) & Cắt Sợi Quang Bằng Dao (B6b)</h3>
+              <span class="text-xs text-indigo-700 font-semibold">Tách thành 2 nhãn nguyên tử độc lập vì dùng 2 bộ dụng cụ khác nhau!</span>
+            </div>
+          </div>
+          <div class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-md">
+            Video thực tế: <span class="text-blue-600 font-bold">01:28.84 ➔ 01:46.66</span>
+          </div>
+        </div>
+
+        <div class="p-6 space-y-8">
+          <!-- B6a: LAU CỒN -->
+          <div id="step-b6a" class="border border-slate-200 rounded-xl p-4 bg-slate-50/40">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md bg-indigo-100 text-indigo-800 text-xs font-bold">B6a: Vệ Sinh Sợi (Lau Cồn)</span>
+                <span class="text-xs text-slate-500">⏱️ 01:28.84 ➔ 01:37.53</span>
+              </div>
+              <span class="text-xs font-semibold text-indigo-700">Key: 01:32.46</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="relative rounded-lg overflow-hidden border border-slate-200">
+                <img src="img/B6a_1.jpg" alt="B6a Start (frame 2627)" class="w-full h-36 object-cover">
+                <div class="absolute bottom-1.5 left-1.5 px-2 py-0.5 text-[11px] font-bold badge-start">Start: 01:28.84 (KTV cho cồn vào khăn giấy)</div>
+              </div>
+              <div class="relative rounded-lg overflow-hidden border-2 border-amber-400">
+                <img src="img/B6a_2.jpg" alt="B6a Key (frame 2734)" class="w-full h-36 object-cover">
+                <div class="absolute bottom-1.5 left-1.5 px-2 py-0.5 text-[11px] font-bold badge-key">⭐ KEY: 01:32.46 (Khăn giấy chạm vào sợi quang)</div>
+              </div>
+              <div class="relative rounded-lg overflow-hidden border border-slate-200">
+                <img src="img/B6a_3.jpg" alt="B6a End (frame 2884)" class="w-full h-36 object-cover">
+                <div class="absolute bottom-1.5 left-1.5 px-2 py-0.5 text-[11px] font-bold badge-end">End: 01:37.53 (Khăn giấy được KTV để ra chỗ khác)</div>
+              </div>
+            </div>
+
+            <!-- 3 MỐC THỜI GIAN CHUẨN B6a (S - KEY - E) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-3 p-2.5 bg-white border border-slate-200 rounded-lg text-xs">
+              <div class="flex items-start gap-1.5">
+                <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[10px] shrink-0">Mốc S</span>
+                <span class="text-slate-700">KTV cho cồn vào khăn giấy</span>
+              </div>
+              <div class="flex items-start gap-1.5">
+                <span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[10px] shrink-0">Keyframe ⭐</span>
+                <span class="text-slate-800 font-bold">Khăn giấy chạm vào sợi quang</span>
+              </div>
+              <div class="flex items-start gap-1.5">
+                <span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[10px] shrink-0">Mốc E</span>
+                <span class="text-slate-700">Khăn giấy được KTV để ra chỗ khác</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 mt-2.5">
+              🔧 <b>Dụng cụ:</b> Chai cồn nhấn + Giấy lau không bụi. 🎯 <b>Đạt:</b> Kẹp giấy cồn vuốt dọc sợi thủy tinh 1-2 lần làm sạch bụi.
+            </p>
+          </div>
+
+          <!-- B6b: DAO CẮT -->
+          <div id="step-b6b" class="border border-slate-200 rounded-xl p-4 bg-slate-50/40">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md bg-purple-100 text-purple-800 text-xs font-bold">B6b: Cắt Bằng Dao Cắt Chính Xác</span>
+                <span class="text-xs text-slate-500">⏱️ 01:41.42 ➔ 01:46.66</span>
+              </div>
+              <span class="text-xs font-semibold text-purple-700">Key: 01:42.27</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="relative rounded-lg overflow-hidden border border-slate-200">
+                <img src="img/B6b_1.jpg" alt="B6b Start (frame 2999)" class="w-full h-36 object-cover">
+                <div class="absolute bottom-1.5 left-1.5 px-2 py-0.5 text-[11px] font-bold badge-start">Start: 01:41.42 (KTV đặt FC + thước đo vào kéo cắt)</div>
+              </div>
+              <div class="relative rounded-lg overflow-hidden border-2 border-amber-400">
+                <img src="img/B6b_2.jpg" alt="B6b Key (frame 3024)" class="w-full h-36 object-cover">
+                <div class="absolute bottom-1.5 left-1.5 px-2 py-0.5 text-[11px] font-bold badge-key">⭐ KEY: 01:42.27 (Đóng nắp kéo cắt, cắt lõi quang)</div>
+              </div>
+              <div class="relative rounded-lg overflow-hidden border border-slate-200">
+                <img src="img/B6b_3.jpg" alt="B6b End (frame 3154)" class="w-full h-36 object-cover">
+                <div class="absolute bottom-1.5 left-1.5 px-2 py-0.5 text-[11px] font-bold badge-end">End: 01:46.66 (FC + thước đo tách rời khỏi kéo cắt)</div>
+              </div>
+            </div>
+
+            <!-- 3 MỐC THỜI GIAN CHUẨN B6b (S - KEY - E) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-3 p-2.5 bg-white border border-slate-200 rounded-lg text-xs">
+              <div class="flex items-start gap-1.5">
+                <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[10px] shrink-0">Mốc S</span>
+                <span class="text-slate-700">KTV đặt FC + thước đo vào kéo cắt</span>
+              </div>
+              <div class="flex items-start gap-1.5">
+                <span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[10px] shrink-0">Keyframe ⭐</span>
+                <span class="text-slate-800 font-bold">Đóng nắp kéo cắt, cắt lõi quang</span>
+              </div>
+              <div class="flex items-start gap-1.5">
+                <span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[10px] shrink-0">Mốc E</span>
+                <span class="text-slate-700">FC + thước đo tách rời khỏi kéo cắt</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 mt-2.5">
+              🔧 <b>Dụng cụ:</b> Dao cắt sợi quang (Cleaver) màu đen trên bàn. 🎯 <b>Đạt:</b> Đặt sợi vào rãnh cữ, dập nắp dao và cắt ngọt đầu sợi 90 độ.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP B7 -->
+      <article id="step-b7" class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden scroll-mt-28">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-violet-600 text-white font-extrabold text-sm rounded-lg shadow-sm">B7</span>
+            <h3 class="text-lg font-bold text-slate-900">Luồn Sợi Quang Vào Thân Fast Connector</h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-700 font-medium">⏱️ 6 – 12 giây</span>
+          </div>
+          <div class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-md">
+            Video thực tế: <span class="text-blue-600 font-bold">01:52.21 ➔ 02:06.96</span> (Key: 01:57.35)
+          </div>
+        </div>
+
+        <div class="p-6">
+          <!-- 3 IMAGES -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B7_1.jpg" alt="B7 Start (frame 3318)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-start">
+                Start: 01:52.21 (KTV cầm cả đầu FC và dây quang)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-100 shadow-md">
+              <img src="img/B7_2.jpg" alt="B7 Key (frame 3470)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-key shadow-sm">
+                ⭐ KEY: 01:57.35 (Dây quang chạm vào đầu FC)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B7_3.jpg" alt="B7 End (frame 3754)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-end">
+                End: 02:06.96 (Dây quang nằm hẳn trong đầu FC)
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 MỐC THỜI GIAN CHUẨN (S - KEY - E) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[11px] shrink-0">Mốc S</span>
+              <span class="text-slate-700">KTV cầm cả đầu FC và dây quang</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[11px] shrink-0">Keyframe ⭐</span>
+              <span class="text-slate-800 font-bold">Dây quang chạm vào đầu FC</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[11px] shrink-0">Mốc E</span>
+              <span class="text-slate-700">Dây quang nằm hẳn trong đầu FC</span>
+            </div>
+          </div>
+
+          <!-- 3 BULLET POINTS -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3.5">
+              <div class="font-bold text-blue-900 mb-1 flex items-center gap-1.5">
+                <span>🔧</span> Dụng cụ nhận diện
+              </div>
+              <p class="text-slate-700"><b>Thân Fast Connector đen</b> (có đầu sứ trắng ferrule) và sợi quang vừa cắt phẳng ở B6b.</p>
+            </div>
+
+            <div class="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5">
+              <div class="font-bold text-emerald-900 mb-1 flex items-center gap-1.5">
+                <span>🎯</span> Dấu hiệu ĐẠT
+              </div>
+              <p class="text-slate-700">Sợi cắm kịch đáy chạm gel, <b>thân sợi cáp hơi cong nhẹ một cung vòm</b> (uốn vi sai bảo đảm tiếp xúc).</p>
+            </div>
+
+            <div class="bg-amber-50/50 border border-amber-100 rounded-xl p-3.5">
+              <div class="font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+                <span>⚠️</span> Chú ý bắt mốc
+              </div>
+              <p class="text-slate-700">Frame Key_Time là frame thấy rõ nhất sợi cáp hơi oằn cong nhẹ trước khi siết chuôi ốc.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP B8 -->
+      <article id="step-b8" class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden scroll-mt-28">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-teal-600 text-white font-extrabold text-sm rounded-lg shadow-sm">B8</span>
+            <h3 class="text-lg font-bold text-slate-900">Vặn Siết Chuôi Ốc Chốt Cáp</h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-700 font-medium">⏱️ 5 – 8 giây</span>
+          </div>
+          <div class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-md">
+            Video thực tế: <span class="text-blue-600 font-bold">02:07.70 ➔ 02:13.14</span> (Key: 02:09.46)
+          </div>
+        </div>
+
+        <div class="p-6">
+          <!-- 3 IMAGES -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B8_1.jpg" alt="B8 Start (frame 3776)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-start">
+                Start: 02:07.70 (KTV kéo đuôi FC lên sát đầu FC chuẩn bị vặn)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-100 shadow-md">
+              <img src="img/B8_2.jpg" alt="B8 Key (frame 3828)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-key shadow-sm">
+                ⭐ KEY: 02:09.46 (KTV vặn FC)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B8_3.jpg" alt="B8 End (frame 3937)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-end">
+                End: 02:13.14 (KTV dừng vặn FC)
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 MỐC THỜI GIAN CHUẨN (S - KEY - E) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[11px] shrink-0">Mốc S</span>
+              <span class="text-slate-700">KTV kéo đuôi FC lên sát đầu FC chuẩn bị vặn</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[11px] shrink-0">Keyframe ⭐</span>
+              <span class="text-slate-800 font-bold">KTV vặn FC</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[11px] shrink-0">Mốc E</span>
+              <span class="text-slate-700">KTV dừng vặn FC</span>
+            </div>
+          </div>
+
+          <!-- 3 BULLET POINTS -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3.5">
+              <div class="font-bold text-blue-900 mb-1 flex items-center gap-1.5">
+                <span>🔧</span> Dụng cụ nhận diện
+              </div>
+              <p class="text-slate-700">Tay xoay vặn <b>chuôi ốc ren đen</b> vào đuôi thân Fast Connector.</p>
+            </div>
+
+            <div class="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5">
+              <div class="font-bold text-emerald-900 mb-1 flex items-center gap-1.5">
+                <span>🎯</span> Dấu hiệu ĐẠT
+              </div>
+              <p class="text-slate-700">Ren ốc được <b>vặn siết chặt khít</b> vào thân FC, kẹp cứng vỏ cáp không bị tuột khi kéo nhẹ.</p>
+            </div>
+
+            <div class="bg-amber-50/50 border border-amber-100 rounded-xl p-3.5">
+              <div class="font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+                <span>⚠️</span> Chú ý tránh nhầm
+              </div>
+              <p class="text-slate-700">Bước này diễn ra trước khi đóng nắp vỏ xanh B9. Chuôi ốc đen phải được vặn hết ren.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP B9 -->
+      <article id="step-b9" class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden scroll-mt-28">
+        <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-green-600 text-white font-extrabold text-sm rounded-lg shadow-sm">B9</span>
+            <h3 class="text-lg font-bold text-slate-900">Khóa Chốt & Đóng Nắp Vỏ Hoàn Thiện</h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-200/80 text-slate-700 font-medium">⏱️ 5 – 9 giây</span>
+          </div>
+          <div class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-md">
+            Video thực tế: <span class="text-blue-600 font-bold">02:13.75 ➔ 02:14.19</span> (Key: 02:14.09)
+          </div>
+        </div>
+
+        <div class="p-6">
+          <!-- 3 IMAGES -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B9_1.jpg" alt="B9 Start (frame 3955)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-start">
+                Start: 02:13.75 (Tay KTV chạm nắp FC)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-100 shadow-md">
+              <img src="img/B9_2.jpg" alt="B9 Key (frame 3965)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-key shadow-sm">
+                ⭐ KEY: 02:14.09 (KTV dùng lực gỡ nắp FC)
+              </div>
+            </div>
+            <div class="group relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+              <img src="img/B9_3.jpg" alt="B9 End (frame 3968)" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-md text-xs font-bold badge-end">
+                End: 02:14.19 (Nắp FC rời hẳn ra khỏi FC)
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 MỐC THỜI GIAN CHUẨN (S - KEY - E) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-extrabold text-[11px] shrink-0">Mốc S</span>
+              <span class="text-slate-700">Tay KTV chạm nắp FC</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-extrabold text-[11px] shrink-0">Keyframe ⭐</span>
+              <span class="text-slate-800 font-bold">KTV dùng lực gỡ nắp FC</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-extrabold text-[11px] shrink-0">Mốc E</span>
+              <span class="text-slate-700">Nắp FC rời hẳn ra khỏi FC</span>
+            </div>
+          </div>
+
+          <!-- 3 BULLET POINTS -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3.5">
+              <div class="font-bold text-blue-900 mb-1 flex items-center gap-1.5">
+                <span>🔧</span> Dụng cụ nhận diện
+              </div>
+              <p class="text-slate-700"><b>Vỏ bảo vệ màu xanh lá FC</b> (tháo ở B1) và thân đầu nối FC đã siết ốc.</p>
+            </div>
+
+            <div class="bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5">
+              <div class="font-bold text-emerald-900 mb-1 flex items-center gap-1.5">
+                <span>🎯</span> Dấu hiệu ĐẠT
+              </div>
+              <p class="text-slate-700">Vỏ xanh trượt khớp ngàm vào thân FC, khóa chốt an toàn; thợ giơ đầu FC hoàn thiện lên kiểm tra.</p>
+            </div>
+
+            <div class="bg-amber-50/50 border border-amber-100 rounded-xl p-3.5">
+              <div class="font-bold text-amber-900 mb-1 flex items-center gap-1.5">
+                <span>⚠️</span> Chú ý kết thúc
+              </div>
+              <p class="text-slate-700">Mốc End của B9 cũng là mốc kết thúc toàn bộ quy trình thi công của video.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP B0 -->
+      <article id="step-b0" class="bg-slate-100 rounded-2xl border border-slate-300/80 p-6 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1 bg-slate-700 text-white font-extrabold text-sm rounded-lg shadow-sm">B0</span>
+            <h3 class="text-lg font-bold text-slate-800">Trạng Thái Nghỉ / Chuyển Tiếp (Transition / Idle)</h3>
+          </div>
+          <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-700 font-semibold">Tự động điền mọi khoảng trống</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-5">
+          <img src="docs/labeling_template/images/b0_transition.jpg" alt="B0 Example" class="w-full sm:w-64 h-36 object-cover rounded-xl border border-slate-300">
+          <div class="text-sm text-slate-700 space-y-2">
+            <p><b>Quy tắc cực kỳ đơn giản:</b> Mọi frame trong video không thuộc 10 hành động trên đều là <b>B0</b>.</p>
+            <ul class="list-disc pl-5 text-xs text-slate-600 space-y-1">
+              <li>Vuốt thẳng cuộn cáp, ngồi chuẩn bị đồ nghề.</li>
+              <li>Chỉnh lại góc quay camera điện thoại, ngắm nghía đồ.</li>
+              <li>Đặt kềm xuống, với tay tìm dụng cụ tiếp theo.</li>
+            </ul>
+            <p class="text-xs text-blue-700 font-semibold mt-2">💡 Giúp AI học nhận biết "lúc thợ không làm gì", triệt tiêu 100% cảnh báo ảo!</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- EDGE CASES ACCORDION / BOX -->
+    <section class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+      <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+        <span>⚡</span> Xử Lý 4 Tình Huống Hay Gặp (Edge Cases)
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+          <div class="font-bold text-slate-900 mb-1">1. Thợ làm B2 (cắt dây) trước B1 (tháo FC)</div>
+          <p class="text-slate-600 text-xs">Cứ gán đúng B2 lúc cắt dây, gán B1 lúc tháo FC. AI sẽ tự động phân tích và chấm điểm thứ tự sau.</p>
+        </div>
+        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+          <div class="font-bold text-slate-900 mb-1">2. Thợ quên Bước 3 (không luồn chuôi ốc)</div>
+          <p class="text-slate-600 text-xs">Tuyệt đối không gán B3. Nếu sau đó thợ nhớ ra và xỏ bổ sung thì gán B3 tại lúc xỏ thực tế.</p>
+        </div>
+        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+          <div class="font-bold text-slate-900 mb-1">3. Cắt hỏng, phải tuốt và cắt lại (Retry)</div>
+          <p class="text-slate-600 text-xs">Gán đầy đủ cả 2 lần (B5_lần1, B6_lần1 rồi B5_lần2, B6_lần2). File JSON hỗ trợ gán nhiều lần cùng 1 bước.</p>
+        </div>
+        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+          <div class="font-bold text-slate-900 mb-1">4. Kềm cắt/kềm tuốt khác màu mẫu</div>
+          <p class="text-slate-600 text-xs">Vẫn gán theo chức năng thao tác (kềm cắt dây thép = B2, kềm tuốt vỏ cáp = B4, kềm tuốt sợi quang = B5).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JSON TEMPLATE QUICK COPY -->
+    <section id="json-schema" class="bg-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-lg">
+      <div class="flex items-center justify-between gap-4 mb-4">
+        <div>
+          <h3 class="text-lg font-bold">📋 Mẫu File JSON Xuất Ra (<span class="text-blue-400 font-mono">ten_video.json</span>)</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Format chuẩn để nạp trực tiếp vào huấn luyện mô hình Action Segmentation</p>
+        </div>
+        <button onclick="copyJsonCode()" id="copy-btn" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold transition-all shadow-sm flex items-center gap-1.5">
+          <span>📋</span> <span id="copy-text">Sao chép JSON mẫu</span>
+        </button>
+      </div>
+
+      <pre class="bg-slate-950 p-4 rounded-xl text-xs font-mono text-emerald-400 overflow-x-auto border border-slate-800 leading-relaxed"><code id="json-code">{
+  "video_name": "ThiCong.mp4",
+  "fps": 29.57,
+  "duration_sec": 137.20,
+  "events": [
+    {"label": "B2", "start_sec": 3.40, "end_sec": 11.07, "key_sec": 8.70, "tool": "kem_cat"},
+    {"label": "B0", "start_sec": 11.07, "end_sec": 13.67},
+    {"label": "B1", "start_sec": 13.67, "end_sec": 15.98, "key_sec": 15.11, "tool": "fast_connector"},
+    {"label": "B0", "start_sec": 15.98, "end_sec": 17.48},
+    {"label": "B3", "start_sec": 17.48, "end_sec": 18.98, "key_sec": 17.94, "tool": "chuoi_oc_fc"},
+    {"label": "B0", "start_sec": 18.98, "end_sec": 20.41},
+    {"label": "B4", "start_sec": 20.41, "end_sec": 24.58, "key_sec": 24.05, "tool": "kem_tuot_vo_ftth"},
+    {"label": "B0", "start_sec": 24.58, "end_sec": 29.42},
+    {"label": "B5", "start_sec": 29.42, "end_sec": 34.65, "key_sec": 33.28, "tool": "kem_tuot_soi_3lo"},
+    {"label": "B0", "start_sec": 34.65, "end_sec": 88.84},
+    {"label": "B6_clean", "start_sec": 88.84, "end_sec": 97.53, "key_sec": 92.46, "tool": "chai_con_giay_lau"},
+    {"label": "B0", "start_sec": 97.53, "end_sec": 101.42},
+    {"label": "B6_cut", "start_sec": 101.42, "end_sec": 106.66, "key_sec": 102.27, "tool": "dao_cat_quang"},
+    {"label": "B0", "start_sec": 106.66, "end_sec": 112.21},
+    {"label": "B7", "start_sec": 112.21, "end_sec": 126.96, "key_sec": 117.35, "tool": "than_fc"},
+    {"label": "B0", "start_sec": 126.96, "end_sec": 127.70},
+    {"label": "B8", "start_sec": 127.70, "end_sec": 133.14, "key_sec": 129.46, "tool": "chuoi_oc_ren"},
+    {"label": "B0", "start_sec": 133.14, "end_sec": 133.75},
+    {"label": "B9", "start_sec": 133.75, "end_sec": 134.19, "key_sec": 134.09, "tool": "vo_xanh_fc"}
+  ]
+}</code></pre>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-slate-200 mt-16 py-8 text-center text-xs text-slate-500 bg-white">
+    <p>© 2026 KTTC_FC Project • Tài liệu chuẩn hóa dữ liệu AI nội bộ</p>
+  </footer>
+
+  <script>
+    function copyJsonCode() {
+      const code = document.getElementById('json-code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const text = document.getElementById('copy-text');
+        text.innerText = 'Đã sao chép thành công!';
+        setTimeout(() => { text.innerText = 'Sao chép JSON mẫu'; }, 2500);
+      });
+    }
+  </script>
+</body>
+</html>

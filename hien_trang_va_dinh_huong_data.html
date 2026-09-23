@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KTTC_FC • Báo Cáo Hiện Trạng & Quyết Định Tái Cấu Trúc Dữ Liệu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass-card { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px); }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased p-4 sm:p-8 lg:p-12 selection:bg-rose-500 selection:text-white">
+
+  <!-- WRAPPER -->
+  <div class="max-w-5xl mx-auto space-y-8">
+
+    <!-- HEADER -->
+    <header class="space-y-3 border-b border-slate-800/80 pb-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 bg-rose-500/10 border border-rose-500/30 text-rose-400 rounded-full text-xs font-bold uppercase tracking-wider">
+        <span>⚠️</span> BÁO CÁO ĐÁNH GIÁ KỸ THUẬT • DỰ ÁN KTTC_FC
+      </div>
+      <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+        Hiện Trạng Hệ Thống & <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-300 to-blue-400">Quyết Định Tái Cấu Trúc Dữ Liệu</span>
+      </h1>
+      <p class="text-slate-400 text-sm sm:text-base max-w-3xl leading-relaxed">
+        Tổng hợp nguyên nhân gốc rễ gây tắc nghẽn độ chính xác mô hình AI nhận diện thao tác kỹ thuật thi công và định hướng hành động giải quyết triệt để.
+      </p>
+    </header>
+
+    <!-- SECTION 1: 3 VẤN ĐỀ CỐT LÕI -->
+    <section class="space-y-4">
+      <h2 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+        <span>🔍</span> 3 VẤN ĐỀ CỐT LÕI GÂY TẮC NGHẼN (ROOT CAUSES)
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+        <!-- CARD 1: MODEL & OVERFITTING -->
+        <div class="glass-card border border-rose-500/30 rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-4 relative overflow-hidden shadow-lg">
+          <div class="absolute -top-10 -right-10 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="space-y-3 relative z-10">
+            <div class="w-10 h-10 rounded-xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 text-xl font-bold">
+              1
+            </div>
+            <h3 class="text-base font-bold text-white leading-snug">
+              Đổi Model Liên Tục Nhưng Không Hiệu Quả, Dễ Overfit
+            </h3>
+            <ul class="space-y-2 text-xs text-slate-300 leading-relaxed list-disc list-inside">
+              <li>Đã thử nghiệm qua nhiều họ kiến trúc (LSTM, GRU, Dual-Stream, Attention, MMPose Feature Fusion...).</li>
+              <li>Thêm đặc trưng bounding box và class từ <b class="text-rose-300">YOLO vào input</b> của mô hình.</li>
+              <li><b class="text-amber-300 font-semibold">Kết quả:</b> Độ chính xác thực tế không cải thiện rõ rệt, mô hình rất nhanh bị <b class="text-rose-400 font-bold">Overfit</b> vì số lượng data quá ít.</li>
+            </ul>
+          </div>
+          <div class="pt-3 border-t border-slate-800 text-[11px] text-rose-400 font-medium">
+            → Điểm nghẽn không nằm ở thuật toán model mà nằm ở chất lượng tập dữ liệu.
+          </div>
+        </div>
+
+        <!-- CARD 2: DATA CŨ PHÂN MẢNH -->
+        <div class="glass-card border border-amber-500/30 rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-4 relative overflow-hidden shadow-lg">
+          <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="space-y-3 relative z-10">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300 text-xl font-bold">
+              2
+            </div>
+            <h3 class="text-base font-bold text-white leading-snug">
+              Data Cũ Cắt Xén Rời Rạc & Tên File Bị Bất Đồng Bộ
+            </h3>
+            <ul class="space-y-2 text-xs text-slate-300 leading-relaxed list-disc list-inside">
+              <li>1 clip dài bị cắt thủ công thành <b class="text-amber-300">x clip con</b> tương ứng với x bước.</li>
+              <li>Tên file được đánh số thiếu đồng bộ, mất metadata liên kết theo dòng thời gian thực tế.</li>
+              <li><b class="text-amber-300 font-semibold">Hệ quả:</b> <b class="text-rose-400 font-bold">Không thể ghép lại thành video gốc hoàn chỉnh</b>, đánh mất hoàn toàn ngữ cảnh chuyển tiếp (B0) và mốc thời gian liên tục giữa các bước.</li>
+            </ul>
+          </div>
+          <div class="pt-3 border-t border-slate-800 text-[11px] text-amber-300 font-medium">
+            → Dữ liệu phân mảnh khiến mô hình không thể học phân đoạn liên tục (Action Segmentation).
+          </div>
+        </div>
+
+        <!-- CARD 3: HARDCODE IF-ELSE -->
+        <div class="glass-card border border-indigo-500/30 rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-4 relative overflow-hidden shadow-lg">
+          <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="space-y-3 relative z-10">
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300 text-xl font-bold">
+              3
+            </div>
+            <h3 class="text-base font-bold text-white leading-snug">
+              Phụ Thuộc Nặng Nề Vào Hard Code "If - Else"
+            </h3>
+            <ul class="space-y-2 text-xs text-slate-300 leading-relaxed list-disc list-inside">
+              <li>Hệ thống suy luận phải dùng hàng loạt quy tắc <b class="text-indigo-300">if-else cứng</b> để chắp vá giữa kết quả YOLO và Step Model.</li>
+              <li>Tạo cảm giác hệ thống chạy được nhưng thực chất là "sửa lỗi thủ công" từng ca đơn lẻ.</li>
+              <li><b class="text-amber-300 font-semibold">Hạn chế:</b> Pipeline suy luận cực kỳ <b class="text-rose-400 font-bold">mong manh (brittle)</b>, chỉ cần thợ làm sai thứ tự một thao tác nhỏ là toàn bộ chuỗi logic bị gãy.</li>
+            </ul>
+          </div>
+          <div class="pt-3 border-t border-slate-800 text-[11px] text-indigo-300 font-medium">
+            → Cần mô hình AI tự học quy luật chuỗi thay vì ràng buộc bằng logic code cứng.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: 2 ĐỒ THỊ SO SÁNH PP CŨ VS MỚI (PHÂN PHỐI GAUSSIAN) -->
+    <section class="space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-800/80 pb-3">
+        <h2 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+          <span>📈</span> SO SÁNH TRỰC QUAN: MÔ HÌNH HÓA DỮ LIỆU CŨ VS MỚI (PHÂN PHỐI GAUSSIAN)
+        </h2>
+        <div class="text-[11px] text-slate-500 font-medium">
+          Trục X: Thời gian clip (giây) • Trục Y: Mức độ nhãn / Xác suất
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6">
+
+        <!-- ĐỒ THỊ 1: PHƯƠNG PHÁP CŨ -->
+        <div class="glass-card border border-rose-500/30 rounded-2xl p-5 sm:p-6 space-y-4 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-rose-500/20 text-rose-300 font-extrabold text-xs border border-rose-500/40 uppercase tracking-wide">
+                Đồ Thị 1
+              </span>
+              <h3 class="text-sm sm:text-base font-bold text-white">
+                Phương Pháp Cũ: Cắt Rời Đoạn & Các Bước Dính Liền Nhau
+              </h3>
+            </div>
+            <span class="text-[11px] text-rose-400 font-semibold bg-rose-950/60 px-2.5 py-1 rounded-lg border border-rose-800/60">
+              Các Bước Dính Liền Nhau • Không Phân Tách Trạng Thái Nghỉ
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Gán nhãn theo phương pháp cũ: Cắt rời từng đoạn và các bước thao tác dính liền liên tục <span class="text-rose-300 font-semibold">(B<sub>1</sub> &rarr; B<sub>2</sub> &rarr; B<sub>3</sub>)</span>, <i>x</i> bước cộng lại vừa khít video gốc, không có khoảng phân tách trạng thái nghỉ hay chuyển tiếp giữa các bước.
+          </p>
+
+          <!-- SVG ĐỒ THỊ 1: CÁC BƯỚC DÍNH LIỀN NHAU -->
+          <div class="bg-slate-950 rounded-xl border border-slate-800 p-3 sm:p-4 overflow-x-auto">
+            <svg viewBox="0 0 800 215" class="w-full min-w-[700px] h-auto text-xs select-none">
+              <!-- Grid Lines -->
+              <line x1="70" y1="45" x2="760" y2="45" stroke="#1e293b" stroke-dasharray="4 4" stroke-width="1"/>
+              <line x1="70" y1="100" x2="760" y2="100" stroke="#1e293b" stroke-dasharray="4 4" stroke-width="1"/>
+              <line x1="70" y1="155" x2="760" y2="155" stroke="#334155" stroke-width="1.5"/>
+
+              <!-- Y Axis -->
+              <line x1="70" y1="25" x2="70" y2="155" stroke="#334155" stroke-width="1.5"/>
+              <text x="60" y="50" fill="#94a3b8" text-anchor="end" font-size="11" font-weight="600">1.0</text>
+              <text x="60" y="105" fill="#64748b" text-anchor="end" font-size="11">0.5</text>
+              <text x="60" y="160" fill="#94a3b8" text-anchor="end" font-size="11" font-weight="600">0.0</text>
+              <text x="25" y="95" fill="#f43f5e" text-anchor="middle" font-size="11" font-weight="700" transform="rotate(-90 25 95)">Nhãn Bước</text>
+
+              <!-- ================= BƯỚC 1: (0s -> 7s: x=70 to 280) ================= -->
+              <rect x="70" y="45" width="210" height="110" fill="rgba(244, 63, 94, 0.18)" stroke="#f43f5e" stroke-width="2.5"/>
+              <text x="175" y="92" fill="#fda4af" text-anchor="middle" font-weight="800" font-size="13">[B1] Tháo FC</text>
+              <text x="175" y="115" fill="#f43f5e" text-anchor="middle" font-size="11" font-weight="600">Nhãn = 1.0 (0s ➔ 7s)</text>
+
+              <!-- ================= BƯỚC 2: (7s -> 16s: x=280 to 520) DÍNH LIỀN ================= -->
+              <rect x="280" y="45" width="240" height="110" fill="rgba(251, 146, 60, 0.18)" stroke="#fb923c" stroke-width="2.5"/>
+              <text x="400" y="92" fill="#fed7aa" text-anchor="middle" font-weight="800" font-size="13">[B2] Cắt Dây Treo</text>
+              <text x="400" y="115" fill="#fb923c" text-anchor="middle" font-size="11" font-weight="600">Nhãn = 1.0 (7s ➔ 16s)</text>
+
+              <!-- ================= BƯỚC 3: (16s -> 24s: x=520 to 760) DÍNH LIỀN ================= -->
+              <rect x="520" y="45" width="240" height="110" fill="rgba(168, 85, 247, 0.18)" stroke="#c084fc" stroke-width="2.5"/>
+              <text x="640" y="92" fill="#e9d5ff" text-anchor="middle" font-weight="800" font-size="13">[B3] Luồn Ốc</text>
+              <text x="640" y="115" fill="#c084fc" text-anchor="middle" font-size="11" font-weight="600">Nhãn = 1.0 (16s ➔ 24s)</text>
+
+              <!-- X Axis Ticks (Continuous Timeline) -->
+              <line x1="70" y1="155" x2="70" y2="165" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="280" y1="155" x2="280" y2="165" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="520" y1="155" x2="520" y2="165" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="760" y1="155" x2="760" y2="165" stroke="#94a3b8" stroke-width="1.5"/>
+
+              <text x="70" y="180" fill="#94a3b8" text-anchor="middle" font-size="10" font-weight="700">0s</text>
+              <text x="280" y="180" fill="#cbd5e1" text-anchor="middle" font-size="10" font-weight="700">7.0s</text>
+              <text x="520" y="180" fill="#cbd5e1" text-anchor="middle" font-size="10" font-weight="700">16.0s</text>
+              <text x="760" y="180" fill="#94a3b8" text-anchor="middle" font-size="10" font-weight="700">24.0s</text>
+
+              <!-- Bottom Label -->
+              <text x="415" y="202" fill="#fda4af" text-anchor="middle" font-size="11" font-weight="800">
+                Trục X: [B1][B2][B3] — Các bước thao tác dính liền sát nhau liên tục trên toàn bộ video
+              </text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- ĐỒ THỊ 2: PHƯƠNG PHÁP MỚI (PHÂN PHỐI GAUSSIAN) -->
+        <div class="glass-card border-2 border-emerald-500/40 rounded-2xl p-5 sm:p-6 space-y-4 shadow-xl relative overflow-hidden">
+          <div class="absolute -top-16 -right-16 w-52 h-52 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="flex flex-wrap items-center justify-between gap-2 relative z-10">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-extrabold text-xs border border-emerald-400/50 uppercase tracking-wide">
+                Đồ Thị 2
+              </span>
+              <h3 class="text-sm sm:text-base font-bold text-white">
+                Phương Pháp Mới: Timeline Video Gốc Liên Tục & Phân Phối Gaussian (Bell Curve)
+              </h3>
+            </div>
+            <span class="text-[11px] text-emerald-300 font-semibold bg-emerald-950/60 px-2.5 py-1 rounded-lg border border-emerald-700/60">
+              ✨ Chuẩn 3 Mốc • Auto-Fill B0 • Gradient Mượt
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-300 leading-relaxed relative z-10">
+            Video gốc được giữ nguyên 100% thời gian liên tục <span class="text-emerald-300 font-semibold">(0 &rarr; T<sub>total</sub>)</span>. Mỗi bước được mô hình hóa bằng một <b class="text-emerald-300">phân phối Gaussian</b> với đỉnh <b>1.0</b> rơi chính xác vào <b class="text-amber-300">⭐ Keyframe</b> (khoảnh khắc vật lý chốt hạ). Vùng nền giữa các bước tự động được nhận diện là <b class="text-slate-300">B0 (Nghỉ / Chuyển tiếp)</b>.
+          </p>
+
+          <!-- SVG ĐỒ THỊ 2 -->
+          <div class="bg-slate-950 rounded-xl border border-slate-800 p-3 sm:p-4 overflow-x-auto relative z-10">
+            <svg viewBox="0 0 800 290" class="w-full min-w-[700px] h-auto text-xs select-none">
+              <defs>
+                <!-- Gaussian Gradient B1 -->
+                <linearGradient id="gaussB1" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.85"/>
+                  <stop offset="60%" stop-color="#0284c7" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="#0284c7" stop-opacity="0.0"/>
+                </linearGradient>
+                <!-- Gaussian Gradient B2 -->
+                <linearGradient id="gaussB2" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#34d399" stop-opacity="0.85"/>
+                  <stop offset="60%" stop-color="#059669" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="#059669" stop-opacity="0.0"/>
+                </linearGradient>
+                <!-- Gaussian Gradient B3 -->
+                <linearGradient id="gaussB3" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.85"/>
+                  <stop offset="60%" stop-color="#d97706" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="#d97706" stop-opacity="0.0"/>
+                </linearGradient>
+                <!-- B0 Pattern -->
+                <pattern id="b0Pattern" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                  <line x1="0" y1="0" x2="0" y2="10" stroke="#334155" stroke-width="1.5" stroke-opacity="0.6"/>
+                </pattern>
+              </defs>
+
+              <!-- Grid Lines -->
+              <line x1="70" y1="50" x2="760" y2="50" stroke="#1e293b" stroke-dasharray="4 4" stroke-width="1"/>
+              <line x1="70" y1="135" x2="760" y2="135" stroke="#1e293b" stroke-dasharray="4 4" stroke-width="1"/>
+              <line x1="70" y1="220" x2="760" y2="220" stroke="#334155" stroke-width="1.5"/>
+
+              <!-- Y Axis -->
+              <line x1="70" y1="30" x2="70" y2="220" stroke="#334155" stroke-width="1.5"/>
+              <text x="60" y="55" fill="#38bdf8" text-anchor="end" font-size="11" font-weight="800">1.0</text>
+              <text x="60" y="140" fill="#64748b" text-anchor="end" font-size="11">0.5</text>
+              <text x="60" y="224" fill="#94a3b8" text-anchor="end" font-size="11" font-weight="600">0.0</text>
+              <text x="25" y="135" fill="#38bdf8" text-anchor="middle" font-size="11" font-weight="700" transform="rotate(-90 25 135)">Xác Suất Gaussian P(t)</text>
+
+              <!-- Continuous B0 Strip on Timeline -->
+              <rect x="70" y="210" width="690" height="10" fill="url(#b0Pattern)"/>
+              <text x="90" y="200" fill="#64748b" font-size="9" font-weight="600">B0 (Nghỉ)</text>
+              <text x="310" y="200" fill="#64748b" font-size="9" font-weight="600">B0 (Đổi kềm)</text>
+              <text x="545" y="200" fill="#64748b" font-size="9" font-weight="600">B0 (Cầm ốc)</text>
+
+              <!-- ================= GAUSSIAN CURVE B1 ================= -->
+              <!-- Start: x=110 (2s), Key: x=190 (6s), End: x=270 (10s) -->
+              <path d="M 110,220 C 145,220 165,50 190,50 C 215,50 235,220 270,220 Z" fill="url(#gaussB1)"/>
+              <path d="M 110,220 C 145,220 165,50 190,50 C 215,50 235,220 270,220" fill="none" stroke="#38bdf8" stroke-width="2.5"/>
+
+              <!-- B1 Peak Marker & Vertical Line -->
+              <line x1="190" y1="50" x2="190" y2="220" stroke="#38bdf8" stroke-dasharray="3 3" stroke-width="1.5"/>
+              <circle cx="190" cy="50" r="4.5" fill="#facc15" stroke="#0284c7" stroke-width="2"/>
+              <text x="190" y="34" fill="#38bdf8" text-anchor="middle" font-weight="800" font-size="11">⭐ KEY: 00:06.0</text>
+              <text x="190" y="130" fill="#bae6fd" text-anchor="middle" font-weight="700" font-size="12">Bước B1: Tháo FC</text>
+
+              <!-- B1 Start / End Pins -->
+              <circle cx="110" cy="220" r="3.5" fill="#22c55e"/>
+              <circle cx="270" cy="220" r="3.5" fill="#ef4444"/>
+              <text x="110" y="235" fill="#22c55e" text-anchor="middle" font-size="9" font-weight="700">🟢 Start: 2s</text>
+              <text x="270" y="235" fill="#ef4444" text-anchor="middle" font-size="9" font-weight="700">🔴 End: 10s</text>
+
+
+              <!-- ================= GAUSSIAN CURVE B2 ================= -->
+              <!-- Start: x=350 (14s), Key: x=440 (18.5s), End: x=530 (23s) -->
+              <path d="M 350,220 C 390,220 415,50 440,50 C 465,50 490,220 530,220 Z" fill="url(#gaussB2)"/>
+              <path d="M 350,220 C 390,220 415,50 440,50 C 465,50 490,220 530,220" fill="none" stroke="#34d399" stroke-width="2.5"/>
+
+              <!-- B2 Peak Marker & Vertical Line -->
+              <line x1="440" y1="50" x2="440" y2="220" stroke="#34d399" stroke-dasharray="3 3" stroke-width="1.5"/>
+              <circle cx="440" cy="50" r="4.5" fill="#facc15" stroke="#059669" stroke-width="2"/>
+              <text x="440" y="34" fill="#34d399" text-anchor="middle" font-weight="800" font-size="11">⭐ KEY: 00:18.5</text>
+              <text x="440" y="130" fill="#a7f3d0" text-anchor="middle" font-weight="700" font-size="12">Bước B2: Cắt Dây Treo</text>
+
+              <!-- B2 Start / End Pins -->
+              <circle cx="350" cy="220" r="3.5" fill="#22c55e"/>
+              <circle cx="530" cy="220" r="3.5" fill="#ef4444"/>
+              <text x="350" y="235" fill="#22c55e" text-anchor="middle" font-size="9" font-weight="700">🟢 Start: 14s</text>
+              <text x="530" y="235" fill="#ef4444" text-anchor="middle" font-size="9" font-weight="700">🔴 End: 23s</text>
+
+
+              <!-- ================= GAUSSIAN CURVE B3 ================= -->
+              <!-- Start: x=580 (25.5s), Key: x=650 (29s), End: x=720 (32.5s) -->
+              <path d="M 580,220 C 610,220 630,50 650,50 C 670,50 690,220 720,220 Z" fill="url(#gaussB3)"/>
+              <path d="M 580,220 C 610,220 630,50 650,50 C 670,50 690,220 720,220" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
+
+              <!-- B3 Peak Marker & Vertical Line -->
+              <line x1="650" y1="50" x2="650" y2="220" stroke="#fbbf24" stroke-dasharray="3 3" stroke-width="1.5"/>
+              <circle cx="650" cy="50" r="4.5" fill="#facc15" stroke="#d97706" stroke-width="2"/>
+              <text x="650" y="34" fill="#fbbf24" text-anchor="middle" font-weight="800" font-size="11">⭐ KEY: 00:29.0</text>
+              <text x="650" y="130" fill="#fde68a" text-anchor="middle" font-weight="700" font-size="12">Bước B3: Luồn Ốc</text>
+
+              <!-- B3 Start / End Pins -->
+              <circle cx="580" cy="220" r="3.5" fill="#22c55e"/>
+              <circle cx="720" cy="220" r="3.5" fill="#ef4444"/>
+              <text x="580" y="235" fill="#22c55e" text-anchor="middle" font-size="9" font-weight="700">🟢 Start: 25.5s</text>
+              <text x="720" y="235" fill="#ef4444" text-anchor="middle" font-size="9" font-weight="700">🔴 End: 32.5s</text>
+
+              <!-- Continuous Timeline Ticks -->
+              <line x1="70" y1="220" x2="760" y2="220" stroke="#94a3b8" stroke-width="1.5"/>
+              <text x="70" y="260" fill="#64748b" text-anchor="middle" font-size="10">0s</text>
+              <text x="190" y="260" fill="#64748b" text-anchor="middle" font-size="10">6s</text>
+              <text x="310" y="260" fill="#64748b" text-anchor="middle" font-size="10">12s</text>
+              <text x="440" y="260" fill="#64748b" text-anchor="middle" font-size="10">18s</text>
+              <text x="560" y="260" fill="#64748b" text-anchor="middle" font-size="10">24s</text>
+              <text x="680" y="260" fill="#64748b" text-anchor="middle" font-size="10">30s</text>
+              <text x="755" y="260" fill="#64748b" text-anchor="middle" font-size="10">T_total</text>
+
+              <!-- X Axis Title -->
+              <text x="415" y="280" fill="#34d399" text-anchor="middle" font-size="11" font-weight="700">Trục X: Dòng thời gian Video gốc hoàn chỉnh (Liên tục 100%, không bị xé nhỏ)</text>
+            </svg>
+          </div>
+
+          <!-- GAUSSIAN BENEFIT SUMMARY -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-[11px] text-slate-300 relative z-10">
+            <div class="p-3 bg-slate-900/90 rounded-xl border border-slate-800">
+              <span class="text-amber-300 font-bold">1. Đỉnh Chuông = 1.0 (Keyframe):</span>
+              <p class="text-slate-400 mt-1">Cung cấp tín hiệu cực mạnh (Peak Anchor) đúng thời điểm vật lý hoàn tất, giúp mô hình tự tin phân loại.</p>
+            </div>
+            <div class="p-3 bg-slate-900/90 rounded-xl border border-slate-800">
+              <span class="text-emerald-300 font-bold">2. Sườn Dốc Mượt Mà (Soft Margin):</span>
+              <p class="text-slate-400 mt-1">Hàm Gaussian <i>e</i><sup>-(t-&mu;)<sup>2</sup> / 2&sigma;<sup>2</sup></sup> tạo gradient liên tục, triệt tiêu hiện tượng nhãn chập chờn (flickering).</p>
+            </div>
+            <div class="p-3 bg-slate-900/90 rounded-xl border border-slate-800">
+              <span class="text-sky-300 font-bold">3. Tự Động Phủ Kín B0:</span>
+              <p class="text-slate-400 mt-1">Khoảng giữa các chân sóng được bảo toàn ngữ cảnh nghỉ và đổi công cụ, mô hình học được toàn bộ dòng chảy hành vi.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: QUYẾT ĐỊNH HÀNH ĐỘNG -->
+    <section class="bg-gradient-to-br from-emerald-950/80 via-slate-900 to-indigo-950/80 border-2 border-emerald-500/50 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl space-y-6">
+      <div class="absolute -left-16 -bottom-16 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- BANNER TITLE -->
+      <div class="space-y-2 relative z-10">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 rounded-full text-xs font-black uppercase tracking-wider">
+          <span>🚀</span> QUYẾT ĐỊNH THEN CHỐT
+        </div>
+        <h2 class="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
+          ➔ DỪNG CHẮP VÁ • LÀM LẠI TOÀN BỘ DATA
+        </h2>
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-3xl">
+          Tập trung dồn 100% nguồn lực giải quyết điểm nghẽn lớn nhất: <b class="text-emerald-300">Dữ liệu đầu vào</b>. Chuẩn hóa lại toàn bộ quy trình gán nhãn trên kho video gốc nguyên bản để tạo nền tảng vững chắc cho mô hình AI.
+        </p>
+      </div>
+
+      <!-- 4 TRỤ CỘT DATA MỚI -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
+
+        <div class="bg-slate-900/80 border border-emerald-500/30 rounded-xl p-4 space-y-1.5">
+          <div class="text-emerald-400 font-bold text-xs uppercase tracking-wide">1. Giữ Nguyên Video Gốc</div>
+          <div class="text-[11px] text-slate-300 leading-relaxed">
+            Không cắt thô video thành các đoạn rời. Giữ nguyên 100% video liên tục từ đầu đến cuối để bảo toàn ngữ cảnh thực tế.
+          </div>
+        </div>
+
+        <div class="bg-slate-900/80 border border-emerald-500/30 rounded-xl p-4 space-y-1.5">
+          <div class="text-emerald-400 font-bold text-xs uppercase tracking-wide">2. Chuẩn 3 Mốc Thời Gian</div>
+          <div class="text-[11px] text-slate-300 leading-relaxed">
+            Mỗi bước xác định rõ: <b class="text-emerald-400">Start</b> (chạm cáp) ➔ <b class="text-amber-300">Key_Time</b> (1 frame then chốt) ➔ <b class="text-rose-400">End</b> (nhả cáp).
+          </div>
+        </div>
+
+        <div class="bg-slate-900/80 border border-emerald-500/30 rounded-xl p-4 space-y-1.5">
+          <div class="text-emerald-400 font-bold text-xs uppercase tracking-wide">3. Tự Động Điền B0 (Nghỉ)</div>
+          <div class="text-[11px] text-slate-300 leading-relaxed">
+            Hệ thống tự động lấp đầy các khoảng nghỉ và chuyển tiếp giữa các bước thao tác, loại bỏ hoàn toàn điểm mù trên video.
+          </div>
+        </div>
+
+        <div class="bg-slate-900/80 border border-emerald-500/30 rounded-xl p-4 space-y-1.5">
+          <div class="text-emerald-400 font-bold text-xs uppercase tracking-wide">4. Nhãn JSON Đồng Bộ</div>
+          <div class="text-[11px] text-slate-300 leading-relaxed">
+            Mỗi video đi kèm 1 file nhãn JSON chuẩn hóa metadata (FPS, duration, timestamp chuẩn mili-giây), tương thích mọi kiến trúc AI.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FOOTER NOTE -->
+      <div class="p-3.5 bg-slate-950/60 border border-slate-800 rounded-xl flex items-center justify-between text-xs text-slate-400 relative z-10">
+        <div>
+          📌 <b>Bộ công cụ triển khai:</b> Đã có sẵn <code>CHAY_LABELER_DESKTOP.bat</code> & <code>QUY_CHUAN_GAN_NHAN_KTTC_FC.html</code>.
+        </div>
+        <div class="text-[11px] text-slate-500">
+          Cập nhật: 21/09/2026
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+</body>
+</html>
