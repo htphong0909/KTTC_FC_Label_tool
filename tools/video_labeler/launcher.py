@@ -124,42 +124,83 @@ def find_free_port(start_port: int = 5055, max_attempts: int = 20, host: str = "
 def is_server_ready(url: str, timeout: float = 0.5) -> bool:
     try:
         import urllib.request
-        req = urllib.request.Request(f"{url}/api/videos", headers={"User-Agent": "KTTC_FC_Launcher"})
+        req = urllib.request.Request(f"{url}/", headers={"User-Agent": "KTTC_FC_Launcher"})
         with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return resp.status == 200
+            return resp.status in (200, 302, 304, 404)
     except Exception:
         return False
 
 
+def get_default_browser_type() -> str:
+    """Detect default browser type from Windows registry (ProgId)."""
+    if sys.platform != "win32":
+        return "default"
+    try:
+        import winreg
+        with winreg.OpenKey(
+            winreg.HKEY_CURRENT_USER,
+            r"Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice",
+        ) as key:
+            prog_id, _ = winreg.QueryValueEx(key, "ProgId")
+            prog_id = prog_id.lower()
+            if "chrome" in prog_id:
+                return "chrome"
+            if "edge" in prog_id:
+                return "edge"
+            if "firefox" in prog_id:
+                return "firefox"
+            if "brave" in prog_id:
+                return "brave"
+    except Exception:
+        pass
+    return "default"
+
+
 def find_browser_app_cmd(url: str):
     """
-    Look for Edge or Chrome executable and return command to run in App mode:
-    --app=url --window-size=1600,950 --user-data-dir=...
+    Look for Chrome or Edge executable and return command to run in App mode:
+    --app=url --window-size=1600,950
+    Crucially includes --no-proxy-server to prevent Windows/Edge loopback proxy refusal.
     """
-    import tempfile
+    profile_dir = os.path.join(os.path.expanduser("~"), ".kttc_fc", "browser_profile")
+    try:
+        os.makedirs(profile_dir, exist_ok=True)
+    except Exception:
+        profile_dir = None
 
-    profile_dir = os.path.join(tempfile.gettempdir(), "kttc_fc_browser_app")
-    app_flags = [f"--app={url}", "--window-size=1600,950", f"--user-data-dir={profile_dir}"]
-
-    # 1. Try Microsoft Edge (Windows default)
-    edge_paths = [
-        os.path.expandvars(r"%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe"),
-        os.path.expandvars(r"%ProgramFiles%\Microsoft\Edge\Application\msedge.exe"),
-        os.path.expandvars(r"%LocalAppData%\Microsoft\Edge\Application\msedge.exe"),
+    app_flags = [
+        f"--app={url}",
+        "--window-size=1600,950",
+        "--no-proxy-server",
+        "--proxy-bypass-list=<-loopback>",
+        "--allow-insecure-localhost",
+        "--disable-features=IsolateOrigins,site-per-process",
     ]
-    for p in edge_paths:
-        if os.path.exists(p):
-            return [p] + app_flags
+    if profile_dir:
+        app_flags.append(f"--user-data-dir={profile_dir}")
 
-    # 2. Try Google Chrome
     chrome_paths = [
         os.path.expandvars(r"%ProgramFiles%\Google\Chrome\Application\chrome.exe"),
         os.path.expandvars(r"%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe"),
         os.path.expandvars(r"%LocalAppData%\Google\Chrome\Application\chrome.exe"),
     ]
-    for p in chrome_paths:
-        if os.path.exists(p):
-            return [p] + app_flags
+    edge_paths = [
+        os.path.expandvars(r"%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe"),
+        os.path.expandvars(r"%ProgramFiles%\Microsoft\Edge\Application\msedge.exe"),
+        os.path.expandvars(r"%LocalAppData%\Microsoft\Edge\Application\msedge.exe"),
+    ]
+
+    default_browser = get_default_browser_type()
+    # Prioritize Chrome over Edge because Edge has strict AppContainer loopback isolation on Windows
+    if default_browser == "edge":
+        candidates = [edge_paths, chrome_paths]
+    else:
+        candidates = [chrome_paths, edge_paths]
+
+    for path_group in candidates:
+        for p in path_group:
+            if os.path.exists(p):
+                return [p] + app_flags
 
     return None
 
@@ -168,7 +209,7 @@ def launch_desktop_window(url: str):
     """
     Launch the app UI window using:
     1. pywebview if available
-    2. Edge / Chrome in app window mode (--app=...)
+    2. Chrome / Edge in app window mode (--app=...)
     3. Default system browser as fallback
     """
     # 1. Try pywebview if installed
@@ -180,33 +221,44 @@ def launch_desktop_window(url: str):
     except (ImportError, Exception):
         pass
 
-    # 2. Try Edge or Chrome in App Mode
+    # 2. Try Chrome / Edge in App Mode
     cmd = find_browser_app_cmd(url)
     if cmd:
-        t0 = time.time()
-        proc = subprocess.Popen(cmd)
         try:
-            proc.wait()
-        except KeyboardInterrupt:
-            try:
-                proc.terminate()
-            except Exception:
-                pass
-            return
+            t0 = time.time()
+            proc = subprocess.Popen(cmd)
+            time.sleep(0.8)
+            # If proc exited immediately with error, fallback to default browser
+            if proc.poll() is not None and proc.poll() != 0:
+                print("[!] Không thể mở ở chế độ App Mode, chuyển sang mở trình duyệt mặc định...")
+                webbrowser.open(url)
+                return
 
-        elapsed = time.time() - t0
-        # If the browser process exited very quickly (< 2.0s), it likely handed off
-        # to an existing background instance. Keep server running until Ctrl+C!
-        if elapsed < 2.0:
-            print("[*] Trình duyệt đã mở trong tiến trình nền. Máy chủ tiếp tục hoạt động...")
-            try:
-                while True:
-                    time.sleep(1)
-            except KeyboardInterrupt:
-                pass
-        return
+            if proc.poll() is None:
+                try:
+                    proc.wait()
+                except KeyboardInterrupt:
+                    try:
+                        proc.terminate()
+                    except Exception:
+                        pass
+                    return
+
+            elapsed = time.time() - t0
+            # If exited quickly (< 2.0s), it handed off to an existing instance
+            if elapsed < 2.0:
+                print("[*] Trình duyệt đã mở trong tiến trình nền. Máy chủ tiếp tục hoạt động...")
+                try:
+                    while True:
+                        time.sleep(1)
+                except KeyboardInterrupt:
+                    pass
+            return
+        except Exception as e:
+            print(f"[!] Lỗi khi mở cửa sổ App Mode: {e}")
 
     # 3. Fallback to default browser
+    print("[*] Đang mở ứng dụng trên trình duyệt mặc định của bạn...")
     webbrowser.open(url)
     try:
         while True:
@@ -269,8 +321,9 @@ def main():
     from tools.video_labeler.app import create_app
     app = create_app()
 
+    # Bind host 0.0.0.0 so both 127.0.0.1 and localhost connect seamlessly
     server_thread = Thread(
-        target=lambda: app.run(host="127.0.0.1", port=port, threaded=True),
+        target=lambda: app.run(host="0.0.0.0", port=port, threaded=True),
         daemon=True,
     )
     server_thread.start()
@@ -282,7 +335,8 @@ def main():
         time.sleep(0.1)
 
     print("\n=======================================================")
-    print(f"  KTTC_FC VIDEO LABELER & SLICER ĐANG CHẠY TẠI: {url}")
+    print(f"  KTTC_FC VIDEO LABELER & SLICER ĐANG CHẠY TẠI:")
+    print(f"  --> {url}  (hoặc http://localhost:{port})")
     print("  Nhấn Ctrl + C hoặc đóng cửa sổ ứng dụng để thoát.")
     print("=======================================================\n")
 
