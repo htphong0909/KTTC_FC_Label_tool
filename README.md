@@ -12,20 +12,16 @@ Công cụ hỗ trợ duyệt video từng frame chính xác, cắt video và ch
    - Sổ tay quy chuẩn tương tác động: hiển thị ảnh mẫu thực tế, dụng cụ, tiêu chuẩn đạt, lưu ý chống nhầm.
    - Tự động kiểm tra tính hợp lệ của mốc (S < Key < E) và xuất nhãn JSON / cắt video bằng FFmpeg.
 
-2. **Công cụ Chụp & Đánh Dấu Mốc (`capture_tool.py`):**
-   - Duyệt video chính xác theo từng frame (Next / Prev / Jump frame).
-   - Đánh dấu 3 mốc chuẩn hóa: **S (Start)**, **Key (Keyframe)**, **E (End)** cho từng bước thi công từ **B1 đến B9**.
-   - Xem trước thumbnail trực quan các mốc đã chụp.
-   - Tự động xuất ảnh chất lượng cao vào thư mục `img/` hoặc `captured_images/`.
-   - Xuất file cấu hình mốc `keyframes_metadata.json`.
+2. **Công cụ Cũ / Bổ Trợ trong thư mục `legacy/`:**
+   - **Chụp & Đánh Dấu Mốc (`legacy/capture_tool.py`)**: Duyệt video từng frame, trích xuất bộ 3 ảnh minh họa S-Key-E.
+   - **Cắt Video Desktop (`legacy/catvideo.py`)**: Cắt phân đoạn video bằng giao diện Tkinter.
 
-3. **Công cụ Cắt Video Desktop (`catvideo.py`):**
-   - Đánh dấu đoạn video, cắt và gán nhãn từng phân đoạn thao tác bằng giao diện Tkinter.
-
-4. **Tài Liệu Chuẩn Hóa Đi Kèm:**
-   - [`QUY_CHUAN_GAN_NHAN_KTTC_FC.html`](QUY_CHUAN_GAN_NHAN_KTTC_FC.html): Sổ tay hướng dẫn gán nhãn nhanh kèm ảnh minh họa trực quan 3 mốc.
-   - [`hien_trang_va_dinh_huong_data.html`](hien_trang_va_dinh_huong_data.html): Báo cáo hiện trạng và định hướng chuẩn hóa bộ dữ liệu.
-   - [`note_S_M_E.md`](note_S_M_E.md): Ghi chú định nghĩa các mốc bắt đầu, kết thúc và keyframe cho 10 bước thi công.
+3. **Tài Liệu Quy Chuẩn trong thư mục `docs/`:**
+   - [`docs/QUY_CHUAN_GAN_NHAN_KTTC_FC.html`](docs/QUY_CHUAN_GAN_NHAN_KTTC_FC.html): Sổ tay hướng dẫn gán nhãn nhanh kèm ảnh minh họa trực quan 3 mốc.
+   - [`docs/QUY_CHUAN_GAN_NHAN_KTTC_FC.pdf`](docs/QUY_CHUAN_GAN_NHAN_KTTC_FC.pdf): Tài liệu xuất bản PDF hoàn chỉnh.
+   - [`docs/QUY_CHUAN_GAN_NHAN_KTTC_FC_STANDALONE.html`](docs/QUY_CHUAN_GAN_NHAN_KTTC_FC_STANDALONE.html): File HTML độc lập nhúng ảnh Base64 offline.
+   - [`docs/hien_trang_va_dinh_huong_data.html`](docs/hien_trang_va_dinh_huong_data.html): Báo cáo hiện trạng và định hướng chuẩn hóa bộ dữ liệu.
+   - [`docs/note_S_M_E.md`](docs/note_S_M_E.md): Ghi chú định nghĩa các mốc bắt đầu, kết thúc và keyframe cho 10 bước thi công.
 
 ---
 
@@ -42,43 +38,63 @@ pip install -r requirements.txt
 
 ## 🚀 Hướng Dẫn Sử Dụng
 
+Thư mục chính được tinh gọn tối đa, chỉ chứa các file thực thi `.bat` để nhấp đúp chạy ngay:
+
 ### 1. Khởi chạy Web Video Labeler (Khuyên dùng)
-- Trên Windows: Nhấp đúp vào file [`CHAY_LABELER_DESKTOP.bat`](CHAY_LABELER_DESKTOP.bat)
+- **Trên Windows**: Nhấp đúp vào file [`CHAY_LABELER_DESKTOP.bat`](CHAY_LABELER_DESKTOP.bat)
 - Hoặc chạy qua terminal:
 ```bash
 python -m tools.video_labeler.launcher
 ```
 
-### 2. Khởi chạy công cụ Capture Tool
-- Trên Windows: Nhấp đúp vào file [`run_capture_tool.bat`](run_capture_tool.bat)
+### 2. Khởi chạy Tool Chụp Ảnh Mốc (Legacy)
+- **Trên Windows**: Nhấp đúp vào file [`CHAY_TOOL_CHUP_ANH_CU.bat`](CHAY_TOOL_CHUP_ANH_CU.bat)
 - Hoặc chạy qua terminal:
 ```bash
-python capture_tool.py
+python legacy/capture_tool.py
 ```
 
-### 3. Khởi chạy công cụ Cắt Video (Desktop GUI)
+### 3. Khởi chạy Tool Cắt Video Desktop Tkinter (Legacy)
+- **Trên Windows**: Nhấp đúp vào file [`CHAY_TOOL_CAT_VIDEO_CU.bat`](CHAY_TOOL_CAT_VIDEO_CU.bat)
+- Hoặc chạy qua terminal:
 ```bash
-python catvideo.py
+python legacy/catvideo.py
 ```
 
 ---
 
-## 📁 Cấu Trúc Thư Mục
+## 📁 Cấu Trúc Thư Mục Tinh Gọn
 
 ```text
-├── tools/video_labeler/            # Web Video Labeler & Slicer hiện đại
-├── CHAY_LABELER_DESKTOP.bat        # Script chạy nhanh Web Video Labeler trên Windows
-├── capture_tool.py                 # Tool chụp và gán mốc S-Key-E
-├── catvideo.py                     # Tool cắt và gán nhãn video
-├── run_capture_tool.bat            # Script chạy nhanh Capture Tool trên Windows
+├── CHAY_LABELER_DESKTOP.bat        # [Chính] Chạy Web Video Labeler trên cổng 5055
+├── CHAY_TOOL_CHUP_ANH_CU.bat       # [Phụ] Chạy tool chụp ảnh 3 mốc S-Key-E cũ
+├── CHAY_TOOL_CAT_VIDEO_CU.bat      # [Phụ] Chạy tool cắt video Tkinter cũ
 ├── requirements.txt                # Thư viện phụ thuộc (Flask, OpenCV, Pillow, FFmpeg)
-├── QUY_CHUAN_GAN_NHAN_KTTC_FC.html # Sổ tay quy chuẩn gán nhãn HTML
-├── hien_trang_va_dinh_huong_data.html # Báo cáo hiện trạng dữ liệu
-├── note_S_M_E.md                   # Ghi chú định nghĩa các mốc
-├── img/                            # Ảnh minh họa mẫu các bước B1 - B9
-├── captured_images/                # Thư mục lưu trữ ảnh chụp trích xuất
+├── README.md                       # Tài liệu hướng dẫn dự án
 ├── LICENSE                         # Giấy phép Apache 2.0
-└── .gitignore                      # Cấu hình bỏ qua môi trường ảo và cache
+├── .gitignore                      # Cấu hình loại trừ cache & môi trường ảo
+│
+├── tools/                          # Bộ công cụ Web Video Labeler & Slicer hiện đại
+│   └── video_labeler/              # App Flask, timeline canvas, launcher, guide data
+│
+├── docs/                           # Thư mục toàn bộ tài liệu & quy chuẩn
+│   ├── QUY_CHUAN_GAN_NHAN_KTTC_FC.html
+│   ├── QUY_CHUAN_GAN_NHAN_KTTC_FC.pdf
+│   ├── QUY_CHUAN_GAN_NHAN_KTTC_FC_STANDALONE.html
+│   ├── QUY_CHUAN_GAN_NHAN_KTTC_FC_PACKAGE.zip
+│   ├── hien_trang_va_dinh_huong_data.html
+│   └── note_S_M_E.md
+│
+├── legacy/                         # Thư mục lưu trữ công cụ cũ
+│   ├── capture_tool.py
+│   ├── catvideo.py
+│   ├── run_capture_tool.bat
+│   ├── run_catvideo.bat
+│   └── captured_images/            # Ảnh đã trích xuất từ tool cũ
+│
+├── img/                            # Ảnh mẫu chuẩn hóa các bước B1 - B9
+├── VIDEO_TRAIN/                    # Thư mục chứa video đầu vào để gán nhãn
+└── outputs/                        # Kết quả xuất ra (annotations & cut clips)
 ```
 
 ---

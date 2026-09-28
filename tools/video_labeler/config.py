@@ -10,3 +10,4 @@ ALLOWED_VIDEO_EXTS = {".mp4", ".mov", ".avi", ".mkv", ".webm"}
 
 ANNOTATION_DIR.mkdir(parents=True, exist_ok=True)
 CUT_CLIPS_DIR.mkdir(parents=True, exist_ok=True)
+DEFAULT_VIDEO_DIR.mkdir(parents=True, exist_ok=True)
