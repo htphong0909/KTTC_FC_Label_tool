@@ -215,7 +215,42 @@ def launch_desktop_window(url: str):
         pass
 
 
+def ensure_dependencies():
+    """Ensure required dependencies (Flask, cv2, Pillow, etc.) are installed."""
+    missing = []
+    try:
+        import flask
+    except ImportError:
+        missing.append("flask>=2.2.0")
+    try:
+        import cv2
+    except ImportError:
+        missing.append("opencv-python")
+    try:
+        from PIL import Image
+    except ImportError:
+        missing.append("Pillow")
+
+    if missing:
+        print(f"[*] Phat hien thieu thu vien: {', '.join(missing)}. Dang tu dong cai dat...")
+        root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        req_file = os.path.join(root_dir, "requirements.txt")
+        if os.path.exists(req_file):
+            cmd = [sys.executable, "-m", "pip", "install", "-r", req_file]
+        else:
+            cmd = [sys.executable, "-m", "pip", "install"] + missing
+        try:
+            subprocess.check_call(cmd)
+            print("[*] Cai dat thu vien thanh cong!")
+        except Exception as e:
+            print(f"[!] Khong the tu dong cai dat thu vien: {e}")
+            print(f"[!] Vui long chay: {sys.executable} -m pip install -r requirements.txt")
+            sys.exit(1)
+
+
 def main():
+    ensure_dependencies()
+
     default_port = 5055
 
     # Luôn kiểm tra và tắt mọi tác vụ tại port đó trước khi khởi động
