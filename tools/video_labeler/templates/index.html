@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KTTC_FC - Công Cụ Gán Nhãn & Cắt Video Chuẩn 3 Mốc</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Custom App Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="bg-slate-950 text-slate-100 h-full flex flex-col overflow-hidden select-none">
+
+  <!-- ====================================================================
+       TOP APP HEADER
+       ==================================================================== -->
+  <header class="h-12 border-b border-slate-800 bg-slate-900/90 px-4 flex items-center justify-between z-30 shrink-0">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-sm shadow-md shadow-blue-500/20">
+        FC
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold text-slate-100 text-sm tracking-tight">KTTC_FC • Video Labeler & Slicer</span>
+        <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full">v2.0 Visual</span>
+        <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full hidden sm:inline-block">Chuẩn 3 Mốc S-K-E</span>
+      </div>
+    </div>
+
+    <!-- Active Video Title in Header -->
+    <div class="hidden md:flex items-center gap-2 text-xs">
+      <span class="text-slate-400 font-medium">Video hiện tại:</span>
+      <span id="headerVideoTitle" class="font-bold text-sky-400 truncate max-w-xs">(Chưa chọn video)</span>
+      <span id="headerVideoMeta" class="text-slate-400 font-mono text-[11px] ml-1"></span>
+    </div>
+
+    <!-- Right Utility Buttons -->
+    <div class="flex items-center gap-2">
+      <!-- Toggle Left Sidebar Button -->
+      <button 
+        id="btnToggleLeftPanel" 
+        class="px-2.5 py-1 text-xs font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 hover:text-white border border-slate-700 rounded-lg transition-colors flex items-center gap-1.5" 
+        title="Đóng / Mở tab danh sách video (Phím tắt: [ hoặc Alt+1)"
+      >
+        <span>📁</span> <span class="hidden sm:inline">Danh sách</span> <kbd class="kbd-badge">[</kbd>
+      </button>
+
+      <!-- Toggle Right Sidebar Button -->
+      <button 
+        id="btnToggleRightPanel" 
+        class="px-2.5 py-1 text-xs font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 hover:text-white border border-slate-700 rounded-lg transition-colors flex items-center gap-1.5" 
+        title="Đóng / Mở tab sổ tay quy chuẩn (Phím tắt: ] hoặc Alt+2)"
+      >
+        <span>📖</span> <span class="hidden sm:inline">Sổ tay</span> <kbd class="kbd-badge">]</kbd>
+      </button>
+
+      <span id="saveStatusIndicator" class="text-[11px] text-slate-400 hidden sm:flex items-center gap-1 ml-1">
+        <span class="w-2 h-2 rounded-full bg-slate-500"></span> Đã đồng bộ
+      </span>
+      <button id="btnOpenHelp" class="px-2.5 py-1 text-xs font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition-colors flex items-center gap-1">
+        <span>⌨️</span> <span>Phím tắt</span> <kbd class="kbd-badge ml-0.5">?</kbd>
+      </button>
+    </div>
+  </header>
+
+  <!-- ====================================================================
+       MAIN 3-PANEL WORKSPACE
+       ==================================================================== -->
+  <div class="flex-1 flex min-h-0 overflow-hidden">
+
+    <!-- ------------------------------------------------------------------
+         LEFT PANEL: Video Playlist & Batch Tracker (Width: ~310px)
+         ------------------------------------------------------------------ -->
+    <aside id="leftSidebar" class="w-72 lg:w-80 border-r border-slate-800 bg-slate-900/70 flex flex-col shrink-0 min-h-0 z-20 transition-all duration-200">
+      
+      <!-- Directory Selector -->
+      <div class="p-3 border-b border-slate-800/80 space-y-2">
+        <div class="flex items-center justify-between text-xs font-bold text-slate-300">
+          <span class="flex items-center gap-1.5">
+            <span>📁</span> <span>Thư mục Video</span>
+          </span>
+          <div class="flex items-center gap-1">
+            <button id="btnLoadFolder" title="Tải lại danh sách" class="text-sky-400 hover:text-sky-300 p-1 hover:bg-slate-800 rounded transition-colors">
+              🔄
+            </button>
+            <button id="btnCollapseLeft" title="Thu gọn tab danh sách (Phím tắt: [ hoặc Alt+1)" class="text-slate-400 hover:text-white p-1 hover:bg-slate-800 rounded transition-colors text-xs ml-1 flex items-center gap-0.5">
+              <span>◀</span>
+            </button>
+          </div>
+        </div>
+        <div class="flex gap-1.5">
+          <input 
+            type="text" 
+            id="folderInput" 
+            value="VIDEO_TRAIN" 
+            placeholder="VIDEO_TRAIN" 
+            class="flex-1 px-2.5 py-1 text-xs bg-slate-950 border border-slate-700 rounded text-slate-200 focus:outline-none focus:border-sky-500 font-mono"
+          >
+          <button 
+            id="btnConfirmFolder" 
+            class="px-2.5 py-1 text-xs font-semibold bg-sky-600 hover:bg-sky-500 text-white rounded transition-colors"
+          >
+            Mở
+          </button>
+        </div>
+      </div>
+
+      <!-- Batch Progress Tracker -->
+      <div class="p-3 border-b border-slate-800/80 bg-slate-950/40">
+        <div class="flex items-center justify-between text-xs mb-1.5">
+          <span class="font-bold text-slate-300">Tiến độ gán nhãn</span>
+          <span id="progressStatsText" class="font-mono text-emerald-400 font-bold">0 / 0 (0%)</span>
+        </div>
+        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+          <div id="batchProgressBar" class="bg-gradient-to-r from-blue-500 to-emerald-400 h-full w-0 transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="p-2 border-b border-slate-800/80 space-y-2">
+        <!-- Search Input -->
+        <div class="relative">
+          <input 
+            type="text" 
+            id="videoSearchInput" 
+            placeholder="Tìm kiếm video (VD: B1.mp4)..." 
+            class="w-full pl-7 pr-2.5 py-1 text-xs bg-slate-950 border border-slate-700 rounded text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500"
+          >
+          <span class="absolute left-2 top-1.5 text-slate-500 text-xs">🔍</span>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="grid grid-cols-4 gap-1 text-[11px] font-medium text-center">
+          <button id="filterAll" data-filter="all" class="filter-tab active py-1 px-1 rounded bg-slate-800 text-sky-300">Tất cả</button>
+          <button id="filterNotAnnotated" data-filter="not_annotated" class="filter-tab py-1 px-1 rounded hover:bg-slate-800 text-slate-400">Chưa gán</button>
+          <button id="filterInProgress" data-filter="in_progress" class="filter-tab py-1 px-1 rounded hover:bg-slate-800 text-amber-400">Đang gán</button>
+          <button id="filterAnnotated" data-filter="annotated" class="filter-tab py-1 px-1 rounded hover:bg-slate-800 text-emerald-400">Đã xong</button>
+        </div>
+      </div>
+
+      <!-- Video Playlist List (Scrollable) -->
+      <div id="videoList" class="flex-1 overflow-y-auto divide-y divide-slate-800/40 p-1">
+        <!-- Dynamic video list items will be injected here -->
+        <div class="p-6 text-center text-xs text-slate-500 italic">
+          Đang tải danh sách video...
+        </div>
+      </div>
+    </aside>
+
+
+    <!-- ------------------------------------------------------------------
+         CENTER PANEL: Video Player, Steps Bar, 3 Action Buttons, Timeline
+         ------------------------------------------------------------------ -->
+    <main class="flex-1 flex flex-col min-w-0 bg-slate-950 overflow-y-auto relative">
+
+      <!-- Floating Restore Buttons when Panels are collapsed -->
+      <button 
+        id="btnExpandLeft" 
+        class="hidden absolute left-3 top-2.5 z-40 px-2.5 py-1 bg-slate-900/95 hover:bg-slate-800 text-sky-400 hover:text-sky-300 border border-slate-700 rounded-lg shadow-xl text-xs font-semibold flex items-center gap-1.5 backdrop-blur transition-all" 
+        title="Mở lại danh sách video (Phím tắt: [ hoặc Alt+1)"
+      >
+        <span>📁</span> <span>Mở Danh sách</span> <span>▶</span>
+      </button>
+
+      <button 
+        id="btnExpandRight" 
+        class="hidden absolute right-3 top-2.5 z-40 px-2.5 py-1 bg-slate-900/95 hover:bg-slate-800 text-amber-400 hover:text-amber-300 border border-slate-700 rounded-lg shadow-xl text-xs font-semibold flex items-center gap-1.5 backdrop-blur transition-all" 
+        title="Mở lại sổ tay quy chuẩn (Phím tắt: ] hoặc Alt+2)"
+      >
+        <span>◀</span> <span>Mở Sổ tay</span> <span>📖</span>
+      </button>
+
+      <!-- Center Panel Top Bar -->
+      <div class="px-4 py-2 border-b border-slate-800/80 bg-slate-900/40 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span id="currentVideoTitle" class="font-bold text-slate-100 text-sm truncate">Chưa chọn video</span>
+          <span id="videoStatusBadge" class="badge-status-not_annotated px-2 py-0.5 text-[10px] font-bold rounded-full uppercase tracking-wider shrink-0">Chưa gán</span>
+        </div>
+        <div class="flex items-center gap-3 text-xs">
+          <span id="videoResBadge" class="font-mono text-slate-400 text-[11px]">-- x --</span>
+          <span id="fpsDisplay" class="font-mono text-slate-300 font-bold bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">30.0 FPS</span>
+        </div>
+      </div>
+
+      <!-- Video Player Viewport Container -->
+      <div class="relative bg-black flex items-center justify-center max-h-[460px] min-h-[260px] group shrink-0">
+        <video 
+          id="videoPlayer" 
+          class="w-full h-full max-h-[460px] object-contain" 
+          preload="auto"
+          playsinline
+        ></video>
+
+        <!-- Video Overlay Top HUD -->
+        <div class="video-overlay-hud absolute top-0 left-0 right-0 p-3 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span id="overlayVideoName" class="text-xs font-semibold text-slate-200 bg-black/60 px-2 py-0.5 rounded backdrop-blur border border-white/10">--</span>
+          </div>
+          <div class="flex items-center gap-2 font-mono">
+            <span id="timeDisplay" class="text-sm sm:text-base font-bold text-amber-400 bg-black/75 px-2.5 py-0.5 rounded backdrop-blur border border-amber-500/30 tabular-nums">
+              00:00.000 / 00:00.000
+            </span>
+            <span id="frameDisplay" class="text-xs font-semibold text-sky-400 bg-black/75 px-2 py-0.5 rounded backdrop-blur border border-sky-500/30 tabular-nums">
+              Frame 0 / 0
+            </span>
+          </div>
+        </div>
+
+        <!-- Empty State Prompt (When no video loaded) -->
+        <div id="videoEmptyPrompt" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/90 text-slate-400 pointer-events-none">
+          <span class="text-4xl mb-2">🎬</span>
+          <p class="text-sm font-semibold text-slate-300">Chọn một video từ danh sách bên trái để bắt đầu gán nhãn</p>
+          <p class="text-xs text-slate-500 mt-1">Phím tắt: Space để Play/Pause, S / K / E để đặt 3 mốc</p>
+        </div>
+      </div>
+
+      <!-- Video Transport Controls Bar -->
+      <div class="px-4 py-2 border-y border-slate-800 bg-slate-900/60 flex flex-wrap items-center justify-between gap-2 shrink-0">
+        <!-- Transport Buttons -->
+        <div class="flex items-center gap-1.5">
+          <button id="btnBack1s" title="Lùi 1s (Shift+←)" class="px-2 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 transition-colors flex items-center gap-1">
+            <span>⏪</span> <span>-1s</span>
+          </button>
+          <button id="btnPrevFrame" title="Lùi 1 frame (←)" class="px-2 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded border border-slate-700 transition-colors flex items-center gap-1 font-bold">
+            <span>◀|</span> <span>-1F</span> <kbd class="kbd-badge">←</kbd>
+          </button>
+          
+          <button id="btnPlayPause" title="Phát / Tạm dừng (Space)" class="px-3.5 py-1 text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white rounded-lg shadow transition-colors flex items-center gap-1.5">
+            <span id="playIcon">▶</span> <span id="playText">Phát</span> <kbd class="kbd-badge text-white/80 bg-blue-700 border-blue-500">Space</kbd>
+          </button>
+
+          <button id="btnNextFrame" title="Tới 1 frame (→)" class="px-2 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded border border-slate-700 transition-colors flex items-center gap-1 font-bold">
+            <span>+1F</span> <span>|▶</span> <kbd class="kbd-badge">→</kbd>
+          </button>
+          <button id="btnFwd1s" title="Tới 1s (Shift+→)" class="px-2 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 transition-colors flex items-center gap-1">
+            <span>+1s</span> <span>⏩</span>
+          </button>
+        </div>
+
+        <!-- Playback Speed Picker -->
+        <div class="flex items-center gap-1 text-xs">
+          <span class="text-slate-400 font-semibold text-[11px] mr-1">Tốc độ:</span>
+          <div class="flex bg-slate-950 p-0.5 rounded-lg border border-slate-800">
+            <button data-speed="0.25" class="speed-btn px-2 py-0.5 rounded text-slate-400 hover:text-white">0.25x</button>
+            <button data-speed="0.5" class="speed-btn px-2 py-0.5 rounded text-slate-400 hover:text-white">0.5x</button>
+            <button data-speed="1.0" class="speed-btn active px-2 py-0.5 rounded text-white bg-blue-600 font-bold">1x</button>
+            <button data-speed="1.5" class="speed-btn px-2 py-0.5 rounded text-slate-400 hover:text-white">1.5x</button>
+            <button data-speed="2.0" class="speed-btn px-2 py-0.5 rounded text-slate-400 hover:text-white">2x</button>
+          </div>
+        </div>
+
+        <!-- Volume & Mute -->
+        <div class="flex items-center gap-2 text-xs">
+          <button id="btnMute" class="text-slate-400 hover:text-white transition-colors" title="Bật/Tắt tiếng">
+            🔊
+          </button>
+          <input id="volumeSlider" type="range" min="0" max="1" step="0.05" value="1" class="w-16 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+        </div>
+      </div>
+
+      <!-- Step Navigation Pills Bar -->
+      <div class="px-4 py-2 border-b border-slate-800 bg-slate-900/30 overflow-x-auto shrink-0">
+        <div class="flex items-center gap-1.5 min-w-max text-xs">
+          <span class="text-slate-500 font-bold text-[11px] uppercase tracking-wider pr-1">Bước:</span>
+          
+          <button data-step="B1" class="step-pill step-pill-b1 active px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
+            <span class="step-dot empty"></span> <span>B1: Tháo FC</span> <kbd class="kbd-badge">1</kbd>
+          </button>
+          <button data-step="B2" class="step-pill step-pill-b2 px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
+            <span class="step-dot empty"></span> <span>B2: Cắt dây</span> <kbd class="kbd-badge">2</kbd>
+          </button>
+          <button data-step="B3" class="step-pill step-pill-b3 px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
+            <span class="step-dot empty"></span> <span>B3: Luồn ốc</span> <kbd class="kbd-badge">3</kbd>
+          </button>
+          <button data-step="B4" class="step-pill step-pill-b4 px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
+            <span class="step-dot empty"></span> <span>B4: Tuốt vỏ FTTH</span> <kbd class="kbd-badge">4</kbd>
+          </button>
+          <button data-step="B5" class="step-pill step-pill-b5 px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
+            <span class="step-dot empty"></span> <span>B5: Tuốt vỏ màu</span> <kbd class="kbd-badge">5</kbd>
+          </button>
+          <button data-step="B6a" class="step-pill step-pill-b6a px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
+            <span class="step-dot empty"></span> <span>B6a: Lau cồn</span> <kbd class="kbd-badge">6</kbd>
+          </button>
+          <button data-step="B6b" class="step-pill step-pill-b6b px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
+            <span class="step-dot empty"></span> <span>B6b: Cắt quang</span> <kbd class="kbd-badge">7</kbd>
+          </button>
+          <button data-step="B7" class="step-pill step-pill-b7 px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
+            <span class="step-dot empty"></span> <span>B7: Luồn sợi FC</span> <kbd class="kbd-badge">8</kbd>
+          </button>
+          <button data-step="B8" class="step-pill step-pill-b8 px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
+            <span class="step-dot empty"></span> <span>B8: Siết ốc</span> <kbd class="kbd-badge">9</kbd>
+          </button>
+          <button data-step="B9" class="step-pill step-pill-b9 px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
+            <span class="step-dot empty"></span> <span>B9: Khóa vỏ</span> <kbd class="kbd-badge">0</kbd>
+          </button>
+          <button data-step="B0" class="step-pill step-pill-b0 px-2.5 py-1 rounded-md text-xs font-semibold flex items-center gap-1 text-slate-400">
+            <span>B0: Nghỉ / Tự động</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3-POINT ACTION BUTTONS & CURRENT STEP MONITOR -->
+      <div class="p-4 border-b border-slate-800 bg-slate-900/40 space-y-3 shrink-0">
+        
+        <!-- Action Buttons Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <!-- Button 1: START (S) -->
+          <button 
+            id="btnSetStart" 
+            class="btn-action-start py-2.5 px-3 rounded-xl font-bold text-white text-xs sm:text-sm flex flex-col items-center justify-center gap-0.5 shadow-lg border border-emerald-400/40"
+          >
+            <span class="flex items-center gap-1">
+              <span>🟢</span> <span>Đặt START</span>
+            </span>
+            <span id="btnSetStartSub" class="text-[10px] text-emerald-100 font-medium text-center line-clamp-1">KTV cầm FC chuẩn bị vặn <kbd class="kbd-badge ml-1 text-emerald-950 bg-emerald-200 border-emerald-400">S</kbd></span>
+          </button>
+
+          <!-- Button 2: KEY_TIME (K) -->
+          <button 
+            id="btnSetKey" 
+            class="btn-action-key py-2.5 px-3 rounded-xl font-bold text-white text-xs sm:text-sm flex flex-col items-center justify-center gap-0.5 shadow-lg border border-amber-400/40"
+          >
+            <span class="flex items-center gap-1">
+              <span>⭐</span> <span>Đặt KEY_TIME</span>
+            </span>
+            <span id="btnSetKeySub" class="text-[10px] text-amber-100 font-medium text-center line-clamp-1">KTV đang vặn FC <kbd class="kbd-badge ml-1 text-amber-950 bg-amber-200 border-amber-400">K</kbd></span>
+          </button>
+
+          <!-- Button 3: END (E) -->
+          <button 
+            id="btnSetEnd" 
+            class="btn-action-end py-2.5 px-3 rounded-xl font-bold text-white text-xs sm:text-sm flex flex-col items-center justify-center gap-0.5 shadow-lg border border-rose-400/40"
+          >
+            <span class="flex items-center gap-1">
+              <span>🔴</span> <span>Đặt END</span>
+            </span>
+            <span id="btnSetEndSub" class="text-[10px] text-rose-100 font-medium text-center line-clamp-1">2 phần FC tách rời nhau <kbd class="kbd-badge ml-1 text-rose-950 bg-rose-200 border-rose-400">E</kbd></span>
+          </button>
+
+          <!-- Button 4: Clear Step -->
+          <button 
+            id="btnClearStep" 
+            class="py-2.5 px-3 rounded-xl font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm flex flex-col items-center justify-center gap-0.5 border border-slate-700 transition-colors"
+          >
+            <span class="flex items-center gap-1">
+              <span>🗑️</span> <span>Xóa Mốc Bước</span>
+            </span>
+            <span class="text-[10px] text-slate-400 font-medium">Xóa dữ liệu bước này <kbd class="kbd-badge ml-1">Del</kbd></span>
+          </button>
+        </div>
+
+        <!-- Current Step Readout Box -->
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-2">
+            <span class="text-slate-400 font-medium">Đang chọn:</span>
+            <span id="curStepLabel" class="font-bold text-blue-400 text-sm">B1: Tháo Đầu Fast Connector</span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4 font-mono">
+            <div class="flex items-center gap-1">
+              <span class="text-emerald-400 font-bold">🟢 START:</span>
+              <span id="curStepStart" class="text-slate-200 font-bold">--:--.---</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-amber-400 font-bold">⭐ KEY:</span>
+              <span id="curStepKey" class="text-slate-200 font-bold">--:--.---</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-rose-400 font-bold">🔴 END:</span>
+              <span id="curStepEnd" class="text-slate-200 font-bold">--:--.---</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-slate-400">Thời lượng:</span>
+              <span id="curStepDuration" class="text-sky-400 font-bold">-- s</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Quick Guidance Strip for Current Step -->
+        <div id="curStepQuickGuide" class="bg-slate-950/90 rounded-xl p-3 border border-blue-500/30 shadow-sm space-y-2 text-xs">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-1.5 flex-wrap gap-2">
+            <span class="text-[11px] font-bold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
+              <span>🎯</span> <span>QUY CHUẨN KHOẢNH KHẮC GÁN NHÃN CHO BƯỚC NÀY</span>
+            </span>
+            <span id="curStepQuickTool" class="text-[11px] text-slate-300 font-medium bg-slate-900 px-2 py-0.5 rounded border border-slate-700/60">
+              🔧 Tay không + Đầu Fast Connector
+            </span>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-[11px]">
+            <!-- S Guide -->
+            <div class="flex items-start gap-1.5 bg-emerald-950/30 border border-emerald-500/30 p-2 rounded-lg">
+              <span class="text-emerald-400 font-bold shrink-0">🟢 S:</span>
+              <span id="curStepGuideS" class="text-emerald-200/90 leading-tight">Khoảnh khắc KTV cầm FC chuẩn bị vặn</span>
+            </div>
+            <!-- Key Guide -->
+            <div class="flex items-start gap-1.5 bg-amber-950/30 border border-amber-500/30 p-2 rounded-lg">
+              <span class="text-amber-400 font-bold shrink-0">⭐ Key:</span>
+              <span id="curStepGuideKey" class="text-amber-200/90 leading-tight font-medium">Khoảnh khắc KTV đang vặn FC</span>
+            </div>
+            <!-- E Guide -->
+            <div class="flex items-start gap-1.5 bg-rose-950/30 border border-rose-500/30 p-2 rounded-lg">
+              <span class="text-rose-400 font-bold shrink-0">🔴 E:</span>
+              <span id="curStepGuideE" class="text-rose-200/90 leading-tight">Khoảnh khắc 2 phần của FC tách rời nhau ra</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Validation Alert Banner (Hidden by default, shown if timing invalid) -->
+        <div id="stepValidationAlert" class="hidden p-2 rounded-lg bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2">
+          <span>⚠️</span>
+          <span id="stepValidationMsg">Mốc thời gian chưa hợp lệ: Key_Time phải nằm giữa Start và End.</span>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           MULTI-TRACK TIMELINE CONTAINER
+           ================================================================ -->
+      <div class="p-4 flex-1 flex flex-col min-h-[170px]">
+        
+        <!-- Timeline Control Toolbar -->
+        <div class="flex items-center justify-between text-xs mb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-slate-300 flex items-center gap-1">
+              <span>📊</span> <span>Timeline Đa Luồng (Interactive Canvas)</span>
+            </span>
+            <span id="cursorTimeDisplay" class="font-mono text-slate-400 text-[11px] bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+              Con trỏ: 00:00.000
+            </span>
+          </div>
+
+          <!-- Zoom Slider Controls -->
+          <div class="flex items-center gap-2">
+            <span class="text-slate-400 text-[11px]">Thu phóng:</span>
+            <button id="btnZoomOut" title="Thu nhỏ" class="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 text-[11px]">🔍-</button>
+            <input 
+              type="range" 
+              id="timelineZoom" 
+              min="1" 
+              max="10" 
+              step="0.1" 
+              value="1" 
+              class="w-24 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer"
+            >
+            <button id="btnZoomIn" title="Phóng to" class="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 text-[11px]">🔍+</button>
+            <button id="btnZoomFit" title="Vừa khung hình" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 text-[11px] font-semibold">Fit</button>
+          </div>
+        </div>
+
+        <!-- Timeline Canvas Wrapper -->
+        <div class="timeline-container relative flex-1 min-h-[104px] rounded-lg border border-slate-800 overflow-hidden bg-slate-950">
+          <canvas id="timelineCanvas" class="timeline-canvas" height="104"></canvas>
+        </div>
+
+        <!-- Timeline Legend -->
+        <div class="flex flex-wrap items-center gap-3 mt-2 text-[11px] text-slate-400 select-none">
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-2 rounded-xs bg-[#2563eb]"></span> <span>B1</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-2 rounded-xs bg-[#dc2626]"></span> <span>B2</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-2 rounded-xs bg-[#d97706]"></span> <span>B3</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-2 rounded-xs bg-[#059669]"></span> <span>B4</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-2 rounded-xs bg-[#0891b2]"></span> <span>B5</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-2 rounded-xs bg-[#7c3aed]"></span> <span>B6a</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-2 rounded-xs bg-[#c026d3]"></span> <span>B6b</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-2 rounded-xs bg-[#ea580c]"></span> <span>B7</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-2 rounded-xs bg-[#4f46e5]"></span> <span>B8</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-3 h-2 rounded-xs bg-[#16a34a]"></span> <span>B9</span>
+          </div>
+          <div class="flex items-center gap-1 text-amber-300 font-semibold">
+            <span>⭐</span> <span>Keyframe</span>
+          </div>
+          <div class="flex items-center gap-1 text-slate-500">
+            <span class="w-3 h-2 rounded-xs bg-slate-700"></span> <span>B0: Tự động điền</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center Bottom Action Toolbar -->
+      <div class="p-3 border-t border-slate-800 bg-slate-900/80 flex items-center justify-between gap-3 shrink-0">
+        <div class="flex items-center gap-2">
+          <!-- Save Annotation Button -->
+          <button 
+            id="btnSaveAnnotation" 
+            class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm rounded-lg shadow-md transition-colors flex items-center gap-1.5"
+          >
+            <span>💾</span> <span>Lưu JSON</span> <kbd class="kbd-badge text-white/80 bg-blue-700 border-blue-500">Ctrl+S</kbd>
+          </button>
+
+          <!-- Trigger Slicing Modal -->
+          <button 
+            id="btnOpenSliceModal" 
+            class="px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm rounded-lg shadow-md transition-colors flex items-center gap-1.5"
+          >
+            <span>✂️</span> <span>Cắt Video Clips</span>
+          </button>
+        </div>
+
+        <!-- Video Navigation -->
+        <div class="flex items-center gap-2">
+          <button 
+            id="btnPrevVideo" 
+            title="Video trước (Alt+P)" 
+            class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold rounded-lg border border-slate-700 transition-colors flex items-center gap-1"
+          >
+            <span>⏮️</span> <span>Video Trước</span> <kbd class="kbd-badge">Alt+P</kbd>
+          </button>
+          <button 
+            id="btnNextVideo" 
+            title="Video tiếp theo (Alt+N)" 
+            class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold rounded-lg border border-slate-700 transition-colors flex items-center gap-1"
+          >
+            <span>Video Tiếp</span> <span>⏭️</span> <kbd class="kbd-badge">Alt+N</kbd>
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+
+    <!-- ------------------------------------------------------------------
+         RIGHT PANEL: Dynamic Guideline Companion (Width: ~360px)
+         ------------------------------------------------------------------ -->
+    <aside id="guideCompanionPanel" class="w-80 lg:w-96 border-l border-slate-800 bg-slate-900/80 flex flex-col shrink-0 min-h-0 z-20 overflow-y-auto transition-all duration-200">
+      
+      <!-- Guideline Step Header -->
+      <div class="p-4 border-b border-slate-800 bg-slate-950/60 sticky top-0 z-10 backdrop-blur">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-[11px] font-extrabold text-blue-400 uppercase tracking-wider flex items-center gap-1">
+            <span>📖</span> SỔ TAY QUY CHUẨN THAM CHIẾU
+          </span>
+          <div class="flex items-center gap-1.5">
+            <span id="guideStepDuration" class="text-xs font-bold text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full">
+              ⏱️ 3 – 6 giây
+            </span>
+            <button id="btnCollapseRight" title="Thu gọn tab sổ tay (Phím tắt: ] hoặc Alt+2)" class="text-slate-400 hover:text-white p-1 hover:bg-slate-800 rounded transition-colors text-xs ml-1 flex items-center gap-0.5">
+              <span>▶</span>
+            </button>
+          </div>
+        </div>
+        <h2 id="guideStepTitle" class="text-base font-extrabold text-white leading-snug">
+          B1: Tháo Đầu Fast Connector (FC)
+        </h2>
+        <div class="text-[11px] text-slate-400 font-mono mt-1">
+          Mẫu chuẩn: <span id="guideSampleRange" class="text-slate-300">00:13.67 ➔ 00:15.98 (Key: 00:15.11)</span>
+        </div>
+      </div>
+
+      <!-- 3 Mốc Khoảnh Khắc Chuẩn (S -> Key -> E) -->
+      <div id="guideMomentsBox" class="p-4 border-b border-slate-800 bg-slate-950/40 space-y-2.5">
+        <div class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+          <span>🎯</span> <span>Quy Chuẩn 3 Khoảnh Khắc (S ➔ Key ➔ E)</span>
+        </div>
+        <div class="space-y-2 text-xs">
+          <!-- Start Moment Card -->
+          <div class="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40">
+            <div class="font-bold text-emerald-300 flex items-center gap-1.5 mb-1">
+              <span>🟢</span> <span>Mốc START (Bắt đầu):</span>
+            </div>
+            <div id="guideMomentS" class="text-emerald-100 text-[11px] leading-relaxed">
+              Khoảnh khắc KTV cầm FC chuẩn bị vặn
+            </div>
+          </div>
+
+          <!-- Key Moment Card -->
+          <div class="p-2.5 rounded-lg bg-amber-950/40 border border-amber-500/50 shadow-sm">
+            <div class="font-bold text-amber-300 flex items-center gap-1.5 mb-1">
+              <span>⭐</span> <span>Mốc KEY_TIME (Then chốt):</span>
+            </div>
+            <div id="guideMomentKey" class="text-amber-100 text-[11px] leading-relaxed font-semibold">
+              Khoảnh khắc KTV đang vặn FC
+            </div>
+          </div>
+
+          <!-- End Moment Card -->
+          <div class="p-2.5 rounded-lg bg-rose-950/40 border border-rose-500/40">
+            <div class="font-bold text-rose-300 flex items-center gap-1.5 mb-1">
+              <span>🔴</span> <span>Mốc END (Kết thúc):</span>
+            </div>
+            <div id="guideMomentE" class="text-rose-100 text-[11px] leading-relaxed">
+              Khoảnh khắc 2 phần của FC tách rời nhau ra
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Reference Photos Cards -->
+      <div class="p-4 border-b border-slate-800 space-y-3">
+        <div class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+          <span>🖼️</span> <span>3 Ảnh Mẫu Đối Chiếu Thao Tác</span>
+        </div>
+
+        <div class="grid grid-cols-1 gap-3">
+          
+          <!-- Photo 1: START -->
+          <div class="ref-photo-card rounded-xl overflow-hidden border border-emerald-500/40 bg-slate-950">
+            <div class="px-2.5 py-1 bg-emerald-950/60 border-b border-emerald-500/30 flex items-center justify-between text-[11px]">
+              <span class="font-extrabold text-emerald-300 flex items-center gap-1">
+                <span>🟢</span> <span>Mốc START (Bắt đầu)</span>
+              </span>
+              <span class="text-emerald-400 text-[10px] font-mono">Chạm cáp</span>
+            </div>
+            <img 
+              id="guideImgStart" 
+              src="/static/img/B1_1.jpg" 
+              alt="Start reference" 
+              class="w-full h-36 object-cover bg-slate-900"
+            >
+            <div id="guideCaptionStart" class="p-2 text-[11px] text-slate-300 font-medium bg-slate-900/90 border-t border-slate-800">
+              Start: 00:13.67 (Khoảnh khắc KTV cầm FC chuẩn bị vặn)
+            </div>
+          </div>
+
+          <!-- Photo 2: KEY_TIME -->
+          <div class="ref-photo-card rounded-xl overflow-hidden border-2 border-amber-400 bg-slate-950 shadow-md ring-2 ring-amber-500/20">
+            <div class="px-2.5 py-1 bg-amber-950/80 border-b border-amber-400/50 flex items-center justify-between text-[11px]">
+              <span class="font-extrabold text-amber-300 flex items-center gap-1">
+                <span>⭐</span> <span>Mốc KEY_TIME (Then chốt)</span>
+              </span>
+              <span class="text-amber-200 text-[10px] font-bold">1 frame duy nhất</span>
+            </div>
+            <img 
+              id="guideImgKey" 
+              src="/static/img/B1_2.jpg" 
+              alt="Keyframe reference" 
+              class="w-full h-36 object-cover bg-slate-900"
+            >
+            <div id="guideCaptionKey" class="p-2 text-[11px] text-amber-200 font-semibold bg-slate-900/90 border-t border-slate-800">
+              ⭐ KEY: 00:15.11 (Khoảnh khắc KTV đang vặn FC)
+            </div>
+          </div>
+
+          <!-- Photo 3: END -->
+          <div class="ref-photo-card rounded-xl overflow-hidden border border-rose-500/40 bg-slate-950">
+            <div class="px-2.5 py-1 bg-rose-950/60 border-b border-rose-500/30 flex items-center justify-between text-[11px]">
+              <span class="font-extrabold text-rose-300 flex items-center gap-1">
+                <span>🔴</span> <span>Mốc END (Kết thúc)</span>
+              </span>
+              <span class="text-rose-400 text-[10px] font-mono">Nhả cáp</span>
+            </div>
+            <img 
+              id="guideImgEnd" 
+              src="/static/img/B1_3.jpg" 
+              alt="End reference" 
+              class="w-full h-36 object-cover bg-slate-900"
+            >
+            <div id="guideCaptionEnd" class="p-2 text-[11px] text-slate-300 font-medium bg-slate-900/90 border-t border-slate-800">
+              End: 00:15.98 (Khoảnh khắc 2 phần của FC tách rời nhau ra)
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Detail Rules & Criteria Cards -->
+      <div class="p-4 space-y-3.5 text-xs">
+        
+        <!-- Tool Card -->
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+          <div class="text-[11px] font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1">
+            <span>🔧</span> <span>Dụng Cụ Nhận Diện</span>
+          </div>
+          <div id="guideToolName" class="font-bold text-white text-sm">
+            Đầu Fast Connector
+          </div>
+          <div id="guideToolDetail" class="text-slate-300 text-[11px] leading-relaxed">
+            Tay không + Đầu Fast Connector (thân đen, vỏ bảo vệ xanh lá, chuôi ốc ren đen).
+          </div>
+        </div>
+
+        <!-- Pass Criteria Card -->
+        <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 space-y-1">
+          <div class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+            <span>✅</span> <span>Dấu Hiệu ĐẠT Chuẩn</span>
+          </div>
+          <div id="guideCriteria" class="text-slate-200 text-[11px] leading-relaxed">
+            Đầu FC được tách thành 3 phần rõ ràng: Vỏ xanh, Thân FC đen, và Chuôi ốc đen để sẵn trên bàn.
+          </div>
+        </div>
+
+        <!-- Caution & Warning Card -->
+        <div class="p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 space-y-1">
+          <div class="text-[11px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
+            <span>⚠️</span> <span>Chú Ý Tránh Nhầm</span>
+          </div>
+          <div id="guideWarning" class="text-slate-300 text-[11px] leading-relaxed">
+            Một số thợ làm B2 (cắt dây) trước B1. Vẫn gán đúng B1 lúc thợ tháo FC, không bị gò bó thứ tự.
+          </div>
+        </div>
+
+        <!-- Quick Rule Reminder -->
+        <div class="p-3 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-[11px] text-slate-300 space-y-1">
+          <div class="font-bold text-indigo-300 flex items-center gap-1">
+            <span>⚡</span> <span>Quy Tắc Vàng 3 Mốc:</span>
+          </div>
+          <ul class="list-disc list-inside space-y-0.5 text-slate-400">
+            <li><b class="text-emerald-300">START:</b> Frame đầu tiên tay/kềm chạm cáp</li>
+            <li><b class="text-amber-300">KEY:</b> Đúng 1 frame hoàn tất cốt lõi</li>
+            <li><b class="text-rose-300">END:</b> Frame vừa buông tay khỏi sợi cáp</li>
+            <li><b class="text-slate-300">B0:</b> Tự động điền mọi khoảng trống</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+
+  <!-- ====================================================================
+       SLICING MODAL DIALOG
+       ==================================================================== -->
+  <div id="sliceModal" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+          <span>✂️</span> <span>Cắt Video Clips Tự Động (FFmpeg)</span>
+        </h3>
+        <button id="btnCloseSliceModal" class="text-slate-400 hover:text-white text-lg font-bold p-1">&times;</button>
+      </div>
+
+      <!-- Slicing Options -->
+      <div class="space-y-3 text-xs">
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+          <div class="text-slate-400">Tùy chọn cắt clip cho video hiện tại:</div>
+          
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input type="checkbox" id="chkFastCopy" class="rounded bg-slate-800 border-slate-700 text-blue-600 focus:ring-0">
+            <span class="text-slate-200 font-semibold">Fast Copy (-c copy)</span>
+            <span class="text-[10px] text-slate-500">Cắt siêu tốc không re-encode (keyframe-aligned)</span>
+          </label>
+
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input type="checkbox" id="chkSliceB0" class="rounded bg-slate-800 border-slate-700 text-blue-600 focus:ring-0">
+            <span class="text-slate-200 font-semibold">Cắt cả clip B0 (khoảng nghỉ / chuyển tiếp)</span>
+          </label>
+        </div>
+
+        <!-- Slicing Progress Box -->
+        <div id="sliceProgressContainer" class="hidden space-y-2 bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <div class="flex items-center justify-between text-xs">
+            <span id="sliceStatusMsg" class="font-medium text-slate-300">Đang chuẩn bị cắt clips...</span>
+            <span id="sliceProgressPct" class="font-mono font-bold text-emerald-400">0%</span>
+          </div>
+          <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+            <div id="sliceProgressBar" class="progress-striped bg-gradient-to-r from-blue-500 to-emerald-400 h-full w-0 transition-all duration-200"></div>
+          </div>
+          <div id="sliceClipsList" class="max-h-24 overflow-y-auto text-[11px] font-mono text-slate-400 space-y-0.5 pt-1">
+            <!-- Rendered clip filenames -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+        <button id="btnCancelSlice" class="px-3.5 py-1.5 text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors">
+          Đóng
+        </button>
+        <button id="btnConfirmSlice" class="px-4 py-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg shadow transition-colors flex items-center gap-1">
+          <span>✂️</span> <span>Bắt đầu cắt</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ====================================================================
+       HOTKEY CHEAT SHEET MODAL
+       ==================================================================== -->
+  <div id="helpModal" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+          <span>⌨️</span> <span>Bảng Phím Tắt Thao Tác Nhanh</span>
+        </h3>
+        <button id="btnCloseHelpModal" class="text-slate-400 hover:text-white text-lg font-bold p-1">&times;</button>
+      </div>
+
+      <div class="text-xs space-y-2 max-h-[60vh] overflow-y-auto pr-1">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 text-slate-400 text-[11px]">
+              <th class="py-1.5">Phím tắt</th>
+              <th class="py-1.5">Hành động</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 font-medium">
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge">Space</kbd></td>
+              <td class="py-2 text-slate-300">Phát / Tạm dừng video</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge">←</kbd> / <kbd class="kbd-badge">→</kbd></td>
+              <td class="py-2 text-slate-300">Lùi / Tới chính xác 1 frame (1 / FPS)</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge">Shift</kbd> + <kbd class="kbd-badge">←</kbd> / <kbd class="kbd-badge">→</kbd></td>
+              <td class="py-2 text-slate-300">Lùi / Tới 1 giây</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge text-emerald-400">S</kbd></td>
+              <td class="py-2 text-emerald-300 font-bold">🟢 Đặt mốc START tại frame hiện tại</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge text-amber-400">K</kbd></td>
+              <td class="py-2 text-amber-300 font-bold">⭐ Đặt mốc KEY_TIME tại frame hiện tại</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge text-rose-400">E</kbd></td>
+              <td class="py-2 text-rose-300 font-bold">🔴 Đặt mốc END tại frame hiện tại</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge">Delete</kbd> / <kbd class="kbd-badge">Backspace</kbd></td>
+              <td class="py-2 text-slate-300">Xóa các mốc của bước đang chọn</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge">1</kbd> .. <kbd class="kbd-badge">9</kbd>, <kbd class="kbd-badge">0</kbd></td>
+              <td class="py-2 text-slate-300">Chuyển nhanh bước thao tác (B1..B9)</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge">Ctrl</kbd> + <kbd class="kbd-badge">S</kbd></td>
+              <td class="py-2 text-sky-300 font-bold">💾 Lưu JSON gán nhãn hiện tại</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge">Alt</kbd> + <kbd class="kbd-badge">N</kbd> / <kbd class="kbd-badge">Alt</kbd> + <kbd class="kbd-badge">P</kbd></td>
+              <td class="py-2 text-slate-300">Chuyển sang Video Tiếp theo / Video Trước</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge">[</kbd> hoặc <kbd class="kbd-badge">Alt</kbd>+<kbd class="kbd-badge">1</kbd></td>
+              <td class="py-2 text-slate-300">Đóng / Mở tab danh sách video bên trái</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge">]</kbd> hoặc <kbd class="kbd-badge">Alt</kbd>+<kbd class="kbd-badge">2</kbd></td>
+              <td class="py-2 text-slate-300">Đóng / Mở tab sổ tay quy chuẩn bên phải</td>
+            </tr>
+            <tr>
+              <td class="py-2"><kbd class="kbd-badge">?</kbd></td>
+              <td class="py-2 text-slate-300">Mở / Đóng bảng phím tắt này</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex justify-end pt-2 border-t border-slate-800">
+        <button id="btnDismissHelp" class="px-4 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors">
+          Đã hiểu
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ====================================================================
+       FLOATING TOAST NOTIFICATION
+       ==================================================================== -->
+  <div id="toastNotification" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-xl bg-slate-900/95 border border-slate-700 text-slate-100 text-xs font-semibold shadow-2xl backdrop-blur flex items-center gap-2">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastMessage">Thông báo</span>
+  </div>
+
+
+  <!-- ====================================================================
+       SCRIPTS
+       ==================================================================== -->
+  <script src="/static/js/guide_data.js"></script>
+  <script src="/static/js/timeline.js"></script>
+  <script src="/static/js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,238 @@
+{
+  "source_video": "C:/Users/htpho/Desktop/KTTC_FC/KTTC_FC/uploads/ThiCong.mp4",
+  "fps": 29.56961164222981,
+  "total_frames": 4057,
+  "duration_sec": 137.20166666666665,
+  "steps": {
+    "B1": {
+      "title": "Bước 1: Tháo Đầu Fast Connector",
+      "points": {
+        "S": {
+          "filename": "B1_1.jpg",
+          "frame": 410,
+          "time_sec": 13.673,
+          "description": "khoảnh khắc KTV cầm FC chuẩn bị vặn"
+        },
+        "Key": {
+          "filename": "B1_2.jpg",
+          "frame": 453,
+          "time_sec": 15.108,
+          "description": "khoảnh khắc KTV đang vặn FC"
+        },
+        "E": {
+          "filename": "B1_3.jpg",
+          "frame": 479,
+          "time_sec": 15.975,
+          "description": "khoảnh khắc 2 phần của FC tách rời nhau ra"
+        }
+      }
+    },
+    "B2": {
+      "title": "Bước 2: Tách & Cắt Dây Treo Kim Loại",
+      "points": {
+        "S": {
+          "filename": "B2_1.jpg",
+          "frame": 102,
+          "time_sec": 3.402,
+          "description": "khoảnh khắc KTV dùng kiềm cắt cắt tách đôi đầu lõi và treo"
+        },
+        "Key": {
+          "filename": "B2_2.jpg",
+          "frame": 261,
+          "time_sec": 8.704,
+          "description": "khoảnh khắc KTV đang kéo tách đôi lõi và dây treo"
+        },
+        "E": {
+          "filename": "B2_3.jpg",
+          "frame": 332,
+          "time_sec": 11.072,
+          "description": "KTV bấm cắt dây treo"
+        }
+      }
+    },
+    "B3": {
+      "title": "Bước 3: Luồn Cáp Vào Chuôi Ốc Chốt",
+      "points": {
+        "S": {
+          "filename": "B3_1.jpg",
+          "frame": 524,
+          "time_sec": 17.475,
+          "description": "khoảnh khắc đuôi FC sắp chạm vào dây"
+        },
+        "Key": {
+          "filename": "B3_2.jpg",
+          "frame": 538,
+          "time_sec": 17.942,
+          "description": "khoảnh khắc đuôi FC được luồng hoàn toàn vào dây"
+        },
+        "E": {
+          "filename": "B3_3.jpg",
+          "frame": 569,
+          "time_sec": 18.976,
+          "description": "khoảnh khắc đuôi FC được luồng xuống sâu, cách đầu dây khoảng dài"
+        }
+      }
+    },
+    "B4": {
+      "title": "Bước 4: Tuốt Vỏ Ngoài Cáp Phẳng FTTH",
+      "points": {
+        "S": {
+          "filename": "B4_1.jpg",
+          "frame": 612,
+          "time_sec": 20.41,
+          "description": "khoảnh khắc dây treo chạm kiềm tách"
+        },
+        "Key": {
+          "filename": "B4_2.jpg",
+          "frame": 721,
+          "time_sec": 24.045,
+          "description": "khoảnh khắc KTV dùng sức bấm kiềm tách"
+        },
+        "E": {
+          "filename": "B4_3.jpg",
+          "frame": 737,
+          "time_sec": 24.579,
+          "description": "khoảnh khắc lộ ra lõi dây quang"
+        }
+      }
+    },
+    "B5": {
+      "title": "Bước 5: Tuốt Lớp Vỏ Màu Sợi Quang",
+      "points": {
+        "S": {
+          "filename": "B5_1.jpg",
+          "frame": 882,
+          "time_sec": 29.415,
+          "description": "khoảnh khắc dây quang được đặt hoàn toàn vào thước đo"
+        },
+        "Key": {
+          "filename": "B5_2.jpg",
+          "frame": 998,
+          "time_sec": 33.283,
+          "description": "khoảnh khắc KTV đang dùng lực bấm kiềm tuốt tuốt lõi quang"
+        },
+        "E": {
+          "filename": "B5_3.jpg",
+          "frame": 1039,
+          "time_sec": 34.651,
+          "description": "khoảnh khắc kiềm tuốt rời khỏi dây quang"
+        }
+      }
+    },
+    "B6a": {
+      "title": "Bước 6a: Vệ Sinh Sợi Quang Bằng Cồn",
+      "points": {
+        "S": {
+          "filename": "B6a_1.jpg",
+          "frame": 2627,
+          "time_sec": 88.841,
+          "description": "khoảnh khắc KTV cho cồn vào khăn giấy"
+        },
+        "Key": {
+          "filename": "B6a_2.jpg",
+          "frame": 2734,
+          "time_sec": 92.46,
+          "description": "khoảnh khắc khăn giấy chạm vào sợi quang"
+        },
+        "E": {
+          "filename": "B6a_3.jpg",
+          "frame": 2884,
+          "time_sec": 97.533,
+          "description": "khoảnh khắc khăn giấy được KTV để ra chỗ khác"
+        }
+      }
+    },
+    "B6b": {
+      "title": "Bước 6b: Cắt Sợi Bằng Dao Cắt Chính Xác",
+      "points": {
+        "S": {
+          "filename": "B6b_1.jpg",
+          "frame": 2999,
+          "time_sec": 101.422,
+          "description": "khoảnh khắc KTV đặt FC + thước đo vào kéo cắt"
+        },
+        "Key": {
+          "filename": "B6b_2.jpg",
+          "frame": 3024,
+          "time_sec": 102.267,
+          "description": "khoảnh khắc đóng nắp kéo cắt, cắt lõi quang"
+        },
+        "E": {
+          "filename": "B6b_3.jpg",
+          "frame": 3154,
+          "time_sec": 106.664,
+          "description": "khoảnh khắc FC + thước đo tách rời khỏi kéo cắt"
+        }
+      }
+    },
+    "B7": {
+      "title": "Bước 7: Luồn Sợi Vào Thân Fast Connector",
+      "points": {
+        "S": {
+          "filename": "B7_1.jpg",
+          "frame": 3318,
+          "time_sec": 112.21,
+          "description": "khoảnh khắc KTV cầm cả đầu FC và dây quang"
+        },
+        "Key": {
+          "filename": "B7_2.jpg",
+          "frame": 3470,
+          "time_sec": 117.35,
+          "description": "khoảnh khắc dây quang chạm vào đầu FC"
+        },
+        "E": {
+          "filename": "B7_3.jpg",
+          "frame": 3754,
+          "time_sec": 126.955,
+          "description": "khoảnh khắc dây quang nằm hẳn trong đầu FC"
+        }
+      }
+    },
+    "B8": {
+      "title": "Bước 8: Vặn Siết Chuôi Ốc Chốt Cáp",
+      "points": {
+        "S": {
+          "filename": "B8_1.jpg",
+          "frame": 3776,
+          "time_sec": 127.699,
+          "description": "khoảnh khắc KTV kéo đuôi FC lên sát đầu FC chuẩn bị vặn"
+        },
+        "Key": {
+          "filename": "B8_2.jpg",
+          "frame": 3828,
+          "time_sec": 129.457,
+          "description": "khoảnh khắc KTV vặn FC"
+        },
+        "E": {
+          "filename": "B8_3.jpg",
+          "frame": 3937,
+          "time_sec": 133.143,
+          "description": "khoảnh khắc KTV dừng vặn FC"
+        }
+      }
+    },
+    "B9": {
+      "title": "Bước 9: Khóa Chốt & Đóng Nắp Vỏ Hoàn Thiện",
+      "points": {
+        "S": {
+          "filename": "B9_1.jpg",
+          "frame": 3955,
+          "time_sec": 133.752,
+          "description": "khoảnh khắc tay KTV chạm nắp FC"
+        },
+        "Key": {
+          "filename": "B9_2.jpg",
+          "frame": 3965,
+          "time_sec": 134.09,
+          "description": "khoảnh khắc KTV dùng lực gỡ nắp FC"
+        },
+        "E": {
+          "filename": "B9_3.jpg",
+          "frame": 3968,
+          "time_sec": 134.192,
+          "description": "khoảnh khắc nắp FC rời hẳn ra khỏi FC"
+        }
+      }
+    }
+  }
+}
