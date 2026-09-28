@@ -35,6 +35,12 @@ class AppController {
     this.sliceJobId = null;
     this.slicePollInterval = null;
 
+    // Auto-advance step state (persisted in localStorage, default: true)
+    this.isAutoAdvanceEnabled = typeof localStorage !== "undefined"
+      ? localStorage.getItem("kttc_auto_advance") !== "false"
+      : true;
+    this.autoAdvanceTimer = null;
+
     // Decoupled Seek Queue state
     this.isSeeking = false;
     this.pendingSeekTime = null;
@@ -114,6 +120,24 @@ class AppController {
     this.curStepDuration = document.getElementById("curStepDuration");
     this.stepValidationAlert = document.getElementById("stepValidationAlert");
     this.stepValidationMsg = document.getElementById("stepValidationMsg");
+
+    // Auto-advance toggle
+    this.chkAutoAdvance = document.getElementById("chkAutoAdvance");
+    if (this.chkAutoAdvance) {
+      this.chkAutoAdvance.checked = this.isAutoAdvanceEnabled;
+      this.chkAutoAdvance.addEventListener("change", (e) => {
+        this.isAutoAdvanceEnabled = e.target.checked;
+        if (typeof localStorage !== "undefined") {
+          try {
+            localStorage.setItem("kttc_auto_advance", String(this.isAutoAdvanceEnabled));
+          } catch (_) {}
+        }
+        this.showToast(
+          this.isAutoAdvanceEnabled ? "Đã BẬT tự động chuyển bước (Auto Next)" : "Đã TẮT tự động chuyển bước (Auto Next)",
+          "⚡"
+        );
+      });
+    }
 
     // Center Panel Quick Guidance Strip
     this.curStepQuickGuide = document.getElementById("curStepQuickGuide");
@@ -863,6 +887,11 @@ class AppController {
       return;
     }
 
+    if (this.autoAdvanceTimer) {
+      clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = null;
+    }
+
     this.activeStep = step;
 
     // Update step pills UI
@@ -879,6 +908,50 @@ class AppController {
   }
 
   /**
+   * Check if a step has all 3 valid marks: start < key < end
+   */
+  isStepCompleted(step) {
+    const data = this.eventsByStep[step];
+    if (!data) return false;
+    const { start_sec, key_sec, end_sec } = data;
+    return (
+      start_sec !== null &&
+      key_sec !== null &&
+      end_sec !== null &&
+      end_sec > start_sec &&
+      key_sec > start_sec &&
+      key_sec < end_sec
+    );
+  }
+
+  /**
+   * Automatically advance to next step in sequence if enabled
+   */
+  triggerAutoAdvance(currentStep) {
+    if (!this.isAutoAdvanceEnabled) return;
+
+    const steps = ["B1", "B2", "B3", "B4", "B5", "B6a", "B6b", "B7", "B8", "B9"];
+    const idx = steps.indexOf(currentStep);
+    if (idx === -1) return;
+
+    if (this.autoAdvanceTimer) {
+      clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = null;
+    }
+
+    if (idx < steps.length - 1) {
+      const nextStep = steps[idx + 1];
+      this.showToast(`[${currentStep}] Đã gán xong! ➔ Tự động chuyển sang ${nextStep}...`, "⚡");
+      this.autoAdvanceTimer = setTimeout(() => {
+        this.autoAdvanceTimer = null;
+        this.setActiveStep(nextStep);
+      }, 450);
+    } else {
+      this.showToast(`🎉 Đã hoàn thành bước cuối cùng (${currentStep})!`, "✅");
+    }
+  }
+
+  /**
    * Set 3-Point Mark: 'start', 'key', 'end'
    */
   setMark(type) {
@@ -889,6 +962,8 @@ class AppController {
 
     const t = Math.round(this.videoPlayer.currentTime * 1000) / 1000;
     const step = this.activeStep;
+
+    const wasCompleted = this.isStepCompleted(step);
 
     if (!this.eventsByStep[step]) {
       this.eventsByStep[step] = { start_sec: null, key_sec: null, end_sec: null };
@@ -910,6 +985,16 @@ class AppController {
     this.updateStepReadout();
     this.updateStepDots();
     this.timeline?.setEvents(this.eventsByStep, this.activeStep);
+
+    // Auto-advance to next step if enabled & step is now complete:
+    // 1) Step transitioned from incomplete to complete (e.g. 3rd mark set)
+    // 2) OR user explicitly re-marked 'end' on an already complete step
+    const isNowCompleted = this.isStepCompleted(step);
+    if (this.isAutoAdvanceEnabled && isNowCompleted) {
+      if (!wasCompleted || type === "end") {
+        this.triggerAutoAdvance(step);
+      }
+    }
   }
 
   /**
